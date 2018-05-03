@@ -28,8 +28,25 @@ function createFeatures()
     
 }
 
+function getFeatures()
+{
+    features = {size : featureCount+1, feature : []};
+    //Only add image if they have added a feature
+    if (featureCount > -1)
+    {
+        //Loop through all the features
+        for (var featuresIndex = 0; featuresIndex <= featureCount;  featuresIndex++)
+        {
+            var descriptionElement = "featuredescription"+featuresIndex;                     
+            features.feature.push({description : document.getElementById(descriptionElement).value, images : 0});            
+        }
+    }
+
+    return features;
+}
+
 //uploads images and stores them under sea lions unique id
-function uploadImage(id)
+function uploadImage(id, currentFeature)
 {
     //Only add image if they have added a feature
     if (featureCount > -1)
@@ -45,6 +62,11 @@ function uploadImage(id)
             //Only try and upload image if the files array has something in it
             if (files.length > 0)
             {
+                //Update image length of data
+                var refString = "sealion/"+id+"/features/feature/"+featuresIndex;
+                var sealion = firebase.database().ref(refString);                
+                sealion.update({ images: files.length });
+
                     //Loop through each image in files and add to firebase storage
                 for (var imageIndex = 0; imageIndex < files.length; imageIndex++)
                 {
@@ -131,6 +153,8 @@ function addSeaLion()
                 clipped_left: getClippedArray("left[]"),
                 clipped_right: getClippedArray("right[]")
         },
+        features: getFeatures(),
+        
     });
 
     uploadImage(key.key);
