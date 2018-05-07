@@ -107,15 +107,25 @@ function uploadImage(id, currentFeature)
 
 function getClippedArray(elementName)
 {
-    var clipped = [""];
+    var clipped = [];
     var checked = document.getElementsByName(elementName);
+
+    // Starts as true, if one is check becomes false
+    var empty = true;
     
     for (var i = 0; i < checked.length; i++)
     {
         if (checked[i].checked)
         {
-            clipped.push(checked[i].value);                    
+            clipped.push(checked[i].value);      
+            empty = false;              
         }
+    }
+    // If still empty then push empty character
+    if (empty)
+    {
+        clipped.push("-");
+
     }
     return clipped;
 }

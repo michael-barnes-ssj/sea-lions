@@ -68,7 +68,7 @@ function getData(data)
 
         //features 
         
-        if (sealion.val().features)
+        if (sealion.val().features.size > 0)
         {
             //Go through every cell and fill with description or empty
             for (var i = 0; i < featureMax ; i++)
@@ -118,52 +118,33 @@ function getData(data)
             } 
         }        
     });
-
 }
 
 function sizeTable(data)
 {
-    var diff = 0;
-    console.log("1. Diff: " + diff);
-    console.log("1. Max: " + featureMax);
+    var diff = 0;    
     
+    //Calcularte how many rows to ad to table on add
     if (featureMax < data.val().features.size)
     {          
         diff = data.val().features.size - featureMax;   
-        featureMax = data.val().features.size;  
-        console.log("2. Diff: " + diff);
-        console.log("2. Max: " + featureMax);
-        
-
+        featureMax = data.val().features.size;
     }
-    console.log("Diff: " + diff);
-    console.log("Max: " + featureMax);
-
-    
 
     //Take first sealion in database and get length of inner objects and assign to table    
     document.getElementById("featuretitle").colSpan = featureMax*2;        
     document.getElementById("details").colSpan = Object.keys(data.val().details).length;
     document.getElementById("tags").colSpan = Object.keys(data.val().tags).length;
-    document.getElementById("toes").colSpan = Object.keys(data.val().toes).length;     
-    
-    rowLength = document.getElementById("titles").cells.length;
-    var total = Object.keys(data.val().details).length + Object.keys(data.val().tags).length + Object.keys(data.val().toes).length + (featureMax);
+    document.getElementById("toes").colSpan = Object.keys(data.val().toes).length;
 
-    
-
-    
+    //Add rows to table
     for (var i = 0; i < diff; i++)
     {
         document.getElementById("titles").insertCell().outerHTML = "<th>Description</th>";  
         document.getElementById("titles").insertCell().outerHTML = "<th>Images</th>";                
-    }         
+    }        
     
-
-    rowLength = document.getElementById("titles").cells.length;
 }
-
-
 
 function getImage(key, featureIndex, imageIndex)
 {    
