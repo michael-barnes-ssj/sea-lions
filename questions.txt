@@ -5,3 +5,5 @@ Place of Birth - How often are they born in new places?
 
 We should probably store all places and tag types in database, and display in select. 
 Have option to add new type to database.
+
+How many fields would we be filtering? Just one? Or multiple?
