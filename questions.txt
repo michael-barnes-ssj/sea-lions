@@ -7,3 +7,4 @@ We should probably store all places and tag types in database, and display in se
 Have option to add new type to database.
 
 How many fields would we be filtering? Just one? Or multiple?
+How many users?
