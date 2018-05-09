@@ -1,4 +1,4 @@
-Tags  - What to store? - Fell out, ripped out, broken, date?
+Tags  - What to store? - Fell out, ripped out, broken, date? (Round) (Colour) (Date Out) (Tag Location) (Seperate tag loss from other features)
 Dates - What should we do about approximate dates? 
 Alive - Add living status?
 Place of Birth - How often are they born in new places? 
@@ -6,5 +6,5 @@ Place of Birth - How often are they born in new places?
 We should probably store all places and tag types in database, and display in select. 
 Have option to add new type to database.
 
-How many fields would we be filtering? Just one? Or multiple?
+How many fields would we be filtering? Just one? Or multiple? Mulitple
 How many users?
