@@ -19,33 +19,52 @@ function cap(string)
 }
 
 // Take passed in sea lion object and iterates through creating html elements and diplays to screen.
-function createCard(data)
-{
-    var sealion = data.data();
-
-    console.log(sealion.name);
+function createCard(sealion)
+{ 
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
-    var sealionDiv = document.createElement("div");
-    var title = document.createElement("h3");
-
-    title.innerHTML = sealion.name;
-    sealionDiv.className = "sealionDiv";
+    var sealionDiv = document.createElement("div");    
+    var featureElement = document.createElement("p");
     
-    sealionDiv.appendChild(title);
+    sealionDiv.className = "sealionDiv";  
+    
     displayDiv.appendChild(sealionDiv);
-    
-    //Loop through each sealion and display data
-    for (var infoKey in sealion) 
-    {
-        console.log(infoKey + ": " + sealion[infoKey]);
 
-        var infoDiv = document.createElement("div");
-        var fieldElement = document.createElement("p"); 
-        fieldElement.innerHTML = cap(infoKey) + ": " + sealion[infoKey];
-        infoDiv.appendChild(fieldElement);
-        sealionDiv.appendChild(infoDiv);       
-    }    
+    //Loop through each sealion and display data
+    for (var key in sealion.data()) 
+    {        
+        //Create element
+        var fieldElement = document.createElement("p");
+        //Fill with field data 
+        fieldElement.innerHTML = cap(key) + ": " + sealion.data()[key];       
+        //Append to sealion div
+        sealionDiv.appendChild(fieldElement);
+    }   
+
+    //Gets all the features associated with sea lion. Updates inner html of element
+    getFeatures(sealion.id, featureElement);  
+    // Add element to sea lion div
+    sealionDiv.appendChild(featureElement);  
+}
+
+// Takes in sea lion id, searches features with that id. Fills passed in element with features string
+function getFeatures(id, element)
+{ 
+    db.collection("Feature").where("id", "==", id).get().then(function(querySnapshot) 
+    {
+        var features = "";
+
+        querySnapshot.forEach(function(doc) 
+        {
+            features += doc.data().description + ", ";
+        }); 
+        
+        element.innerHTML = "Features: " + features.slice(0,-2);
+    })
+    .catch(function(error) 
+    {
+        console.log("Error getting documents: ", error);
+    });
 }
 
 function getImage(key, featureIndex, imageIndex)

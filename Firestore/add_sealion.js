@@ -28,9 +28,9 @@ function createFeatures()
     div.appendChild(form);    
 }
 
-function getFeatures()
+function addFeatures(id)
 {
-    features = {size : featureCount+1, feature : []};
+    
     //Only add image if they have added a feature
     if (featureCount > -1)
     {
@@ -38,11 +38,19 @@ function getFeatures()
         for (var featuresIndex = 0; featuresIndex <= featureCount;  featuresIndex++)
         {
             var descriptionElement = "featuredescription"+featuresIndex;                     
-            features.feature.push({description : document.getElementById(descriptionElement).value, images : 0});            
-        }
-    }
+            feature = {description : document.getElementById(descriptionElement).value, images : 0, index : featuresIndex, id : id};   
 
-    return features;
+            db.collection("Feature").add(feature).then(function(docRef)
+            {
+                console.log("Document written with ID: ", docRef.id);
+                //uploadImage(docRef.id);
+
+            }).catch(function(error) 
+            {
+                console.error("Error adding document: ", error);
+            });          
+        }
+    }    
 }
 
 //uploads images and stores them under sea lions unique id
@@ -127,15 +135,12 @@ function getClipped(elementName)
 }
 
 function addSeaLion()
-{
-	
+{	
 	left = getClipped("left[]");
-	right = getClipped("right[]");
-	
+	right = getClipped("right[]");	
 	
     sealion = 
-    {
-        
+    {        
         name: checkIfEmpty(document.getElementById("name").value),
         mother: checkIfEmpty(document.getElementById("mother").value),
         dob: checkIfEmpty(document.getElementById("dob").value),
@@ -158,14 +163,13 @@ function addSeaLion()
 		right2: right[1],
 		right3: right[2],
 		right4: right[3],
-		right5: right[4],
-                
-    };	
-	
+		right5: right[4],                
+    };		
 
     db.collection("Sea Lions").add(sealion).then(function(docRef)
     {
         console.log("Document written with ID: ", docRef.id);
+        addFeatures(docRef.id);
         //uploadImage(docRef.id);
 
     }).catch(function(error) 
@@ -182,5 +186,4 @@ function checkIfEmpty(formdata)
         data = formdata;
     }
     return data;
-
 }
