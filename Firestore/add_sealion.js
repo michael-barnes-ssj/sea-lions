@@ -105,70 +105,74 @@ function uploadImage(id, currentFeature)
     }
 }
 
-function getClippedArray(elementName)
+function getClipped(elementName)
 {
     var clipped = [];
-    var checked = document.getElementsByName(elementName);
-
-    // Starts as true, if one is check becomes false
-    var empty = true;
+    var checked = document.getElementsByName(elementName);    
     
     for (var i = 0; i < checked.length; i++)
     {
         if (checked[i].checked)
         {
-            clipped.push(checked[i].value);      
+            clipped.push(true);      
             empty = false;              
         }
-    }
-    // If still empty then push empty character
-    if (empty)
-    {
-        clipped.push("-");
-
-    }
+		else
+		{
+			clipped.push(false);  
+		}
+    }   
+	
     return clipped;
 }
 
 function addSeaLion()
 {
+	
+	left = getClipped("left[]");
+	right = getClipped("right[]");
+	
+	
     sealion = 
     {
-        details: {
+        
         name: checkIfEmpty(document.getElementById("name").value),
         mother: checkIfEmpty(document.getElementById("mother").value),
         dob: checkIfEmpty(document.getElementById("dob").value),
         pob:  checkIfEmpty(document.getElementById("pob").value),
         gender: checkIfEmpty(document.getElementById("gender").value),
-        transponder: checkIfEmpty(document.getElementById("transponder").value)
-        },
-        tags: {
-                date_in: checkIfEmpty(document.getElementById("tagdate").value),
-                type: checkIfEmpty(document.getElementById("tagtype").value),
-                description: checkIfEmpty(document.getElementById("tagdescription").value),
-                number: checkIfEmpty(document.getElementById("tagnumber").value),
-                rf_number: checkIfEmpty(document.getElementById("rfnumber").value),
-                left_attached: "Yes",
-                right_attached: "Yes"
-        },
-        toes: {
-
-                clipped_left: getClippedArray("left[]"),
-                clipped_right: getClippedArray("right[]")
-        },
-        features: getFeatures()        
-    };
+        transponder: checkIfEmpty(document.getElementById("transponder").value),   
+		tag_date_in: checkIfEmpty(document.getElementById("tagdate").value),
+		type: checkIfEmpty(document.getElementById("tagtype").value),
+		tag_description: checkIfEmpty(document.getElementById("tagdescription").value),
+		tag_number: checkIfEmpty(document.getElementById("tagnumber").value),
+		rf_number: checkIfEmpty(document.getElementById("rfnumber").value),
+		left_attached: "Yes",
+		right_attached: "Yes",	
+		left1: left[0],
+		left2: left[1],
+		left3: left[2],
+		left4: left[3],
+		left5: left[4],
+		right1: right[0],
+		right2: right[1],
+		right3: right[2],
+		right4: right[3],
+		right5: right[4],
+                
+    };	
+	
 
     db.collection("Sea Lions").add(sealion).then(function(docRef)
     {
         console.log("Document written with ID: ", docRef.id);
-        uploadImage(docRef.id);
+        //uploadImage(docRef.id);
 
     }).catch(function(error) 
     {
         console.error("Error adding document: ", error);
     });     
-}  
+}   
 
 function checkIfEmpty(formdata)
 {

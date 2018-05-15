@@ -7,7 +7,7 @@ var rowLength;
 function displaySeaLion()
 {    
     db.collection("Sea Lions").get().then(function(document) 
-    {
+    {        
         document.forEach(createCard);
     });  
 }  
@@ -23,55 +23,28 @@ function createCard(data)
 {
     var sealion = data.data();
 
+    console.log(sealion.name);
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
     var sealionDiv = document.createElement("div");
     var title = document.createElement("h3");
 
-    title.innerHTML = sealion.details.name;
+    title.innerHTML = sealion.name;
     sealionDiv.className = "sealionDiv";
     
     sealionDiv.appendChild(title);
     displayDiv.appendChild(sealionDiv);
     
-    //Loop through each set on info
+    //Loop through each sealion and display data
     for (var infoKey in sealion) 
     {
-        //Create elements
+        console.log(infoKey + ": " + sealion[infoKey]);
+
         var infoDiv = document.createElement("div");
-        var infoTitle = document.createElement("h4");
-
-        infoDiv.className = "pure-u-1-4 infoDiv";
-        infoTitle.innerHTML = cap(infoKey);    
-        infoDiv.appendChild(infoTitle);
-        sealionDiv.appendChild(infoDiv);
-        
-        //Loop through each field and add to html
-        for (var key in sealion[infoKey])
-        {
-            var field = sealion[infoKey][key]; 
-            var fieldElement = document.createElement("p"); 
-            
-            //If not a feature add normally
-            if (key != "feature")
-            {                                  
-                fieldElement.innerHTML = cap(key) + ": " + field;
-                infoDiv.appendChild(fieldElement);
-            }
-            //If a feature create a concatenated string of all features
-            else
-            {
-                var featureString = "";
-                
-                for (var featureIndex in sealion[infoKey][key])
-                {
-                    featureString += field[featureIndex].description +", ";
-                }
-
-                fieldElement.innerHTML = featureString.slice(0,-2);
-                infoDiv.appendChild(fieldElement);
-            }   
-        }
+        var fieldElement = document.createElement("p"); 
+        fieldElement.innerHTML = cap(infoKey) + ": " + sealion[infoKey];
+        infoDiv.appendChild(fieldElement);
+        sealionDiv.appendChild(infoDiv);       
     }    
 }
 
