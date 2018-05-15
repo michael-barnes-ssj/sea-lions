@@ -24,7 +24,7 @@ function createCard(sealion)
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
     var sealionDiv = document.createElement("div");    
-    var featureElement = document.createElement("p");
+    
     
     sealionDiv.className = "sealionDiv";  
     
@@ -42,24 +42,37 @@ function createCard(sealion)
     }   
 
     //Gets all the features associated with sea lion. Updates inner html of element
-    getFeatures(sealion.id, featureElement);  
+    getFeatures(sealion.id, sealionDiv);  
     // Add element to sea lion div
-    sealionDiv.appendChild(featureElement);  
+     
 }
 
 // Takes in sea lion id, searches features with that id. Fills passed in element with features string
-function getFeatures(id, element)
+function getFeatures(id, div)
 { 
     db.collection("Feature").where("id", "==", id).get().then(function(querySnapshot) 
-    {
-        var features = "";
+    {   
+        //Create features title 
+        var title = document.createElement("p");
+        title.innerHTML = "Features:";
+        div.appendChild(title);    
 
+        // Go through each feature and create desciption element
         querySnapshot.forEach(function(doc) 
-        {
-            features += doc.data().description + ", ";
+        {            
+            var featureElement = document.createElement("p");
+            featureElement.innerHTML = doc.data().description;
+            div.appendChild(featureElement);
+
+            // For each image the feature has, create element and fill it with image
+            for (var i = 0; i < doc.data().images; i++)
+            {
+                var img = document.createElement("img");
+                img.className = "smallImage";
+                getImage(doc.id, i, img);
+                div.appendChild(img);                
+            } 
         }); 
-        
-        element.innerHTML = "Features: " + features.slice(0,-2);
     })
     .catch(function(error) 
     {
@@ -67,15 +80,13 @@ function getFeatures(id, element)
     });
 }
 
-function getImage(key, featureIndex, imageIndex)
+function getImage(id, index, element)
 {    
-    var imageRef = "features/"+key+"/feature"+featureIndex+"/image"+imageIndex; 
+    var imageRef = id+"/image"+index; 
 	
     firebase.storage().ref().child(imageRef).getDownloadURL().then(function(url)
-    {
-        var ref = key+featureIndex+imageIndex;
-        var imgRef = document.getElementById(ref);
-        imgRef.src = url;        
+    {        
+        element.src = url;        
     });
 }
     
