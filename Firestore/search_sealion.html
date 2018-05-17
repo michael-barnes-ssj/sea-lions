@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" 
+    integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" 
+    crossorigin="anonymous">    
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/grids-responsive-min.css">
+    <link rel="stylesheet" href="css/style.css">    
+    <!--Connect to firebase -->    
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <!--Load firestore -->   
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
+
+    <script src="firebase_connect.js"></script>    
+    <script src="search_sealion.js"></script>
+    <script src="display_sealion.js"></script>
+    
+</head>
+  <body onload="displaySeaLion()">    
+    
+    <h1>Sea Lions</h1>
+
+    <input type="button" value="Search" onclick="search()">     
+
+    <h2>Sea Lions currently in database</h2>   
+
+    <div id="displaySealions" class="pure-u-1-1">
+    </div>
+    
+    
+  </body>
+</html>
