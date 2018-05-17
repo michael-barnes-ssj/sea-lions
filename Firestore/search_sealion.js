@@ -1,35 +1,38 @@
+const filterObj = {
+    property: '',
+    comparison: '==',
+    value: ''
+}
 
-//TO ACCEPT SEARCH FIELDS AS ASSOC ARRAY IN FUTURE
-function search()
-{
-    // //let searchFieldDict = {name:"Mum"};
-    // var sealions = db.collection("Sea Lions");
-    // var query = sealions.where("name", "==", "Mum");
-    // query.get().then((data)=>{
-    //     console.log(data);
-    //     data.docs.forEach((d) => {console.log(d.data());
-    //     });
-    // });
-
-    db.collection("Sea Lions").get().then(function(lions) 
-    {
-        matches = [];
-        lions.forEach((lion) => {
-            lion.doc("details").where('name', '==', 'kyukukuyk').get().then( (data) => {
-                console.log(data);
-            })
-        });
-        //console.log(document.id, '=>', document.data());
-        //document.forEach((d) => {console.log(d.data());});
+// Accepts array of filter objects to apply as search
+// Builds query by adding each filter and then executes
+function search() {
+    filters = makeFilters(); //To be replaced with parameter
+    query = db.collection("Sea Lions");
+    // Apply each filter to the query
+    filters.forEach(filter => {
+        query = applyFilter(query, filter)
     });
+    //Retrieve the query data
+    query.get().then(lions => {
+        lions.forEach(lion => {
+            console.log(lion.id, lion.data());
+        });
+    });
+}
 
-    // var sealions = db.collection('test');
-    // var query = sealions
-    //     .where('name', '==', 'test')
-    //     .get()
-    //     .then(snapshot => {
-    //         snapshot.forEach(document => {
-    //             console.log(document.id, '=>', document.data());
-    //         });
-    //     })
+// Accepts collection (data set) to add filter to
+function applyFilter(collection, filter) {
+    return collection.where(filter.property, filter.comparison, filter.value);
+}
+
+// Just to provide dummy filter objects for testing
+function makeFilters() {
+    filterA = Object.create(filterObj);
+    filterB = Object.create(filterObj);
+    filterA.property = 'gender';
+    filterA.value = 'Male'
+    filterB.property = 'left1';
+    filterB.value = false;
+    return [filterA, filterB];
 }
