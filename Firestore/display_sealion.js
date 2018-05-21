@@ -12,6 +12,16 @@ function displaySeaLion()
     });  
 }  
 
+// Gets sealion data matching id from firestore and calls create card
+function displaySeaLionById(id)
+{    
+    //ERROR CHECKING FOR NON EXISTENT ID
+    db.collection("Sea Lions").get().where('id', '==', id).then(function(document) 
+    {
+        document.forEach(createCard);
+    });  
+} 
+
 // Takes a string and makes first letter upper case and replaces _ with a space
 function cap(string) 
 {

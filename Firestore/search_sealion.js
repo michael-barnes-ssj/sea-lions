@@ -36,3 +36,8 @@ function makeFilters() {
     filterB.value = false;
     return [filterA, filterB];
 }
+
+function fullTextSearch() {
+    var client = algoliasearch('V49I282PT8', '36e156d06bfa536da4820072fd64309d');
+    var index = client.initIndex('');
+}
