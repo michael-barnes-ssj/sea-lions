@@ -19,38 +19,37 @@ function cap(string)
 }
 
 // Take passed in sea lion object and iterates through creating html elements and diplays to screen.
-function createCard(sealion)
+function createCard(sealionDocument)
 { 
+    var sealion = sealionDocument.data();
+
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
-    var sealionDiv = document.createElement("div");    
+    var sealionDiv = document.createElement("div");        
     
-    
-    sealionDiv.className = "sealionDiv";  
-    
+    sealionDiv.className = "sealionDiv"; 
     displayDiv.appendChild(sealionDiv);
 
     //Loop through each sealion and display data
-    for (var key in sealion.data()) 
+    for (var key in sealion) 
     {        
         //Create element
         var fieldElement = document.createElement("p");
         //Fill with field data 
-        fieldElement.innerHTML = cap(key) + ": " + sealion.data()[key];       
+        fieldElement.innerHTML = cap(key) + ": " + sealion[key];       
         //Append to sealion div
         sealionDiv.appendChild(fieldElement);
     }   
 
     //Gets all the features associated with sea lion. Updates inner html of element
-    getFeatures(sealion.id, sealionDiv);  
-    // Add element to sea lion div
-     
+    getFeatures(sealionDocument.id, sealionDiv);  
+    // Add element to sea lion div     
 }
 
 // Takes in sea lion id, searches features with that id. Fills passed in element with features string
 function getFeatures(id, div)
 { 
-    db.collection("Feature").where("id", "==", id).get().then(function(querySnapshot) 
+    db.collection("Feature").where("id", "==", id).get().then(function(features) 
     {   
         //Create features title 
         var title = document.createElement("p");
@@ -58,18 +57,18 @@ function getFeatures(id, div)
         div.appendChild(title);    
 
         // Go through each feature and create desciption element
-        querySnapshot.forEach(function(doc) 
+        features.forEach(function(feature) 
         {            
             var featureElement = document.createElement("p");
-            featureElement.innerHTML = doc.data().description;
+            featureElement.innerHTML = feature.data().description;
             div.appendChild(featureElement);
 
             // For each image the feature has, create element and fill it with image
-            for (var i = 0; i < doc.data().images; i++)
+            for (var i = 0; i < feature.data().images; i++)
             {
                 var img = document.createElement("img");
                 img.className = "smallImage";
-                getImage(doc.id, i, img);
+                getImage(feature.id, i, img);
                 div.appendChild(img);                
             } 
         }); 
