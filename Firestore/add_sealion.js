@@ -123,6 +123,7 @@ function addSeaLion()
         pob:  checkIfEmpty(document.getElementById("pob").value),
         gender: checkIfEmpty(document.getElementById("gender").value),
         transponder: checkIfEmpty(document.getElementById("transponder").value),   
+        living_status: checkIfEmpty(document.getElementById("living_status").value),   
 		tag_date_in: checkIfEmpty(document.getElementById("tagdatein").value),
         left_tag_date_out: checkIfEmpty(document.getElementById("lefttagdateout").value),
         right_tag_date_out: checkIfEmpty(document.getElementById("righttagdateout").value),
