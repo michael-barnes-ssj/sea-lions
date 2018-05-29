@@ -16,9 +16,10 @@
     <script src="firebase_connect.js"></script>    
     <script src="add_sealion.js"></script>
     <script src="display_sealion.js"></script>
+    <script src="populate_dropdowns.js"></script>
     
     </head>
-    <body onload="displaySeaLion()">    
+    <body onload="displaySeaLion(), fillDropdowns()">    
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
                 <div class="large-12 medium-12 cell">
@@ -50,9 +51,8 @@
 
                                         <label for="gender">Gender: </label>
                                         <select id="gender">    
-                                            <option>Male</option>
-                                            <option>Female</option>    
                                         </select> 
+                                        <input name="gender" type="button" value="Add Gender" onclick="addToList(this)">
 
                                         <label for="transponder">Transponder: </label>    
                                         <input id="transponder" type="text" name="transponder">
@@ -83,21 +83,14 @@
                                         <input id="righttagdateout" type="date" name="righttagdateout">
 
                                         <label for="tagcolour">Tag colour: </label>      
-                                        <select id="tagcolour"> 
-                                            <option>None</option> 
-                                            <option>Yellow </option> 
-                                            <option>White</option>
-                                            <option>Orange</option>
-                                            <option>Pink</option>
-                                            <option>Red</option>                                            
+                                        <select id="tagcolour">                    
                                         </select>
+                                        <input name="tagcolour" type="button" value="Add New Tag Colour" onclick="addToList(this)">
 
                                         <label for="tagtype">Tag type: </label>      
-                                        <select id="tagtype"> 
-                                            <option>None</option> 
-                                            <option>Round </option> 
-                                            <option>Coffin</option>                                                                                       
-                                        </select>                                       
+                                        <select id="tagtype">                                                                                                                                   
+                                        </select>   
+                                        <input name="tagtype" type="button" value="Add New Tag Type" onclick="addToList(this)">                                    
 
                                         <label for="tagnumber">Tag Number: </label>    
                                         <input id="tagnumber" type="text" name="tagnumber">
