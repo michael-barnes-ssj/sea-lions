@@ -1,6 +1,21 @@
 function fillDropdowns()
 {
 	getList("gender");
+	getList("tagcolour");
+	getList("tagtype");
+	getMothers();
+}
+
+function getMothers()
+{
+	db.collection("Sea Lions").get().then(function(document) 
+    {  
+		document.forEach(function(values)
+		{			
+			console.log(values.data());
+			addOptionToDropDown(values.data().name, "mother");					
+		});
+	});
 }
 
 function getList(dropdownName)
@@ -14,11 +29,11 @@ function getList(dropdownName)
     }); 
 }
 
-function start(genders, dropdownName)
+function start(data, dropdownName)
 {	
-	for (var key in genders)
+	for (var key in data)
 	{		
-		addOptionToDropDown(genders[key], dropdownName);
+		addOptionToDropDown(data[key], dropdownName);
 	}
 }
 
