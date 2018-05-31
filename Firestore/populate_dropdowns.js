@@ -1,6 +1,6 @@
 function fillDropdowns()
 {
-	getList("gender");
+	getList("pob");
 	getList("tagcolour");
 	getList("tagtype");
 	getMothers();
