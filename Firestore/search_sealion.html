@@ -1,40 +1,38 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
   <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
+    <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Sea lion</title>
+    <title>NZSLT Home</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
-    <!--Connect to firebase -->    
-    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
-    <!--Load firestore -->   
-    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
-
-    <script src="firebase_connect.js"></script>    
-    <script src="add_sealion.js"></script>
-    <script src="display_sealion.js"></script>
-    
-    </head>
-    <body onload="displaySeaLion()">
-        <nav class="hover-underline-menu" data-menu-underline-from-center>
-			<h1 class="menu title align-center">NZSLT Database</h1>
-            <ul class="menu align-center">
-                <li><a href="search_sealion.html">Search Sealion</a></li>
-                <li><a href="add_sealion.html">Add a Sea Lion</a></li>
-                <li><a href="#">Display All</a></li>
-            </ul>
-        </nav>
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <div class="large-12 medium-12 cell">
-                        <br>
-                        <h1 id="title">ADD A SEA LION</h1> 
-                        <div class="callout">
-                        <div class="grid-x grid-padding-x">
-                            <div class="large-4 medium-4 cell">
+  </head>
+  <body>
+  
+  <nav class="hover-underline-menu" data-menu-underline-from-center>
+      <h1 class="menu title align-center">NZSLT Database</h1>
+      <ul class="menu align-center btm">
+        <li><a href="search_sealion.html">Search Sealion</a></li>
+        <li><a href="add_sealion.html">Add a Sea Lion</a></li>
+        <li><a href="#">Display All</a></li>
+        
+    <input type="search" class="search-nav searchbar" placeholder="Enter Sea lion ID">
+    <button type="button" class="button nav searchbtn">Quick Search</button>
+      </ul>
+  </nav>
+	
+	<div class="large-12 cell page-header"> 
+	</div>
+	
+    <div class="grid-container">
+	<div class="grid-x grid-padding-x">
+        <div class="large-12 cell">
+        <br>
+        <h1 id="title">SEARCH SEA LION</h1>  
+          <div class="callout">
+		  <div class="grid-x grid-padding-x">
+            <div class="large-4 medium-4 cell">
                                 <h3>Details</h3>
                                 <form>
                                     <fieldset>
@@ -64,7 +62,6 @@
                                         <input id="transponder" type="text" name="transponder">
                                     </fieldset>
                                 </form>
-								<input type="button" value="Add Sea Lion" onclick="addSeaLion()" class="button add">
                             </div>
 
 
@@ -134,30 +131,19 @@
                                         <label class="toe-label" for="rightfour">4</label>
                                         <label class="toe-label" for="rightfive">5</label>
                                     </div>
-                                    <br> 
-                                    <h3>Features</h3>
-
-                                    <input type="button" value="Add Feature" onclick="createFeatures()"  class="button feature"> 
-                                </div> 
+                                    <br>
+                                </div>
+                                <button type="button" class="button search">Search</button> 
                             </div>
-                        </div>
-                        </div>     
-
-                        <h2>Sea lions currently in database</h2>
-                        
-                </div>
-            </div>
-        </div>
-        <div class="grid-container">
-            <div class="grid-x grid-padding-x">
-                <div id="displaySealions" class="large-12 medium-12 cell">
-                </div>
-            </div>
-        </div>
-
+		  </div>
+		</div>
+	</div>
+	</div>
+    </div>
 	
 	<div class="large-12 cell footer">
 	</div>
+  
 
         <script>
             $("body").on("click", "label", function(e) {
@@ -167,11 +153,10 @@
             console.log(getInputRadio.attr("id"));  
             });
         </script>
-
-
-        <script src="js/vendor/jquery.js"></script>
-        <script src="js/vendor/what-input.js"></script>
-        <script src="js/vendor/foundation.js"></script>
-        <script src="js/app.js"></script>
-    </body>
+		  	
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+  </body>
 </html>
