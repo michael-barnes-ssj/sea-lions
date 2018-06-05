@@ -3,11 +3,19 @@ var imageSrc = "";
 var rowLength;
 
 //Gets data from firestore and calls create card on each sea lion
-function displaySeaLion()
+function displaySeaLionTbl()
 {   
     db.collection("Sea Lions").get().then(function(document) 
     {        
         document.forEach(createTable);
+        console.log(document);
+    }); 
+}
+function displaySeaLion()
+{   
+    db.collection("Sea Lions").get().then(function(document) 
+    {        
+        document.forEach(createCard);
         console.log(document);
     }); 
 }
@@ -24,8 +32,8 @@ function createTable(sealion)
     var tbl_body = document.getElementById("tbl_body");
 
     var tbl_row = document.createElement("tr");
-    tbl_row.id = sealion.id;
-    tbl_row.onclick = openModal(sealion.id);
+    tbl_row.id = sealion.data()["id"];
+    tbl_row.onclick = openModal(sealion.data()["id"]);
     tbl_body.appendChild(tbl_row);
 
     var name = document.createElement("td").innerHTML = sealion.data()["name"];

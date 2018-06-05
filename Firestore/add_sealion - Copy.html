@@ -22,8 +22,8 @@
         <nav class="hover-underline-menu" data-menu-underline-from-center>
 			<h1 class="menu title align-center">NZSLT Database</h1>
             <ul class="menu align-center">
-                <li><a href="search_sealion - Copy.html">Search Sealion</a></li>
-                <li><a href="add_sealion - Copy.html">Add a Sea Lion</a></li>
+                <li><a href="search_sealion - Copy.html">Search</a></li>
+                <li><a href="add_sealion - Copy.html">Add Sea Lion</a></li>
                 <li><a href="display_all_sea_lion.html">Display All</a></li>
             </ul>
         </nav>
@@ -31,7 +31,7 @@
             <div class="grid-x grid-padding-x">
                 <div class="large-12 medium-12 cell">
                         <br>
-                        <h1 id="title">ADD A SEA LION</h1> 
+                        <h1 id="ptitle">ADD A SEA LION</h1> 
                         <div class="callout">
                         <div class="grid-x grid-padding-x">
                             <div class="large-4 medium-4 cell">
@@ -53,9 +53,10 @@
                                         <label for="pob">POB: </label>
 										<select id="pob">    
                                         </select>                                       
-										<input name="pob" type="button" value="Add new Location" onclick="addToList(this)">
+										<input name="pob" type="button" value="Add new Location" onclick="addToList(this)" class="button colwide">
 
                                         <label for="gender">Gender: </label>
+                                        <input id="gender" type="text" name="gender">
                                          
                                         
 
@@ -69,7 +70,7 @@
                                         </select> 
                                     </fieldset>
                                 </form>
-								<input href="display_all_sea_lion.html" type="button" value="Add Sea Lion" onclick="addSeaLion()" class="button add">
+								<input href="display_all_sea_lion.html" type="button" value="Add Sea Lion" onclick="addSeaLion()" class="button colwide">
                             </div>
 
 
@@ -89,12 +90,12 @@
                                         <label for="tagcolour">Tag colour: </label>      
                                         <select id="tagcolour">                    
                                         </select>
-                                        <input name="tagcolour" type="button" value="Add New Tag Colour" onclick="addToList(this)">
+                                        <input name="tagcolour" type="button" value="Add New Tag Colour" onclick="addToList(this)" class="button colwide">
 
                                         <label for="tagtype">Tag type: </label>      
                                         <select id="tagtype">                                                                                                                                   
                                         </select>   
-                                        <input name="tagtype" type="button" value="Add New Tag Type" onclick="addToList(this)">                                    
+                                        <input name="tagtype" type="button" value="Add New Tag Type" onclick="addToList(this)" class="button colwide">                                    
 
                                         <label for="tagnumber">Tag Number: </label>    
                                         <input id="tagnumber" type="text" name="tagnumber">
@@ -139,20 +140,20 @@
                                         <label class="toe-label" for="rightfour">4</label>
                                         <label class="toe-label" for="rightfive">5</label>
                                     </div>
-                                    <br> 
+                                    <br>
+                                    <input type="button" value="Add Feature" onclick="createFeatures()"  class="button thirdcol">
                                     <h3>Features</h3>
 
-                                    <input type="button" value="Add Feature" onclick="createFeatures()"  class="button feature"> 
+                                     
                                 </div> 
                             </div>
                         </div>
-                        </div>     
-
-                        <h2>Sea lions currently in database</h2>
+                        </div>
                         
                 </div>
             </div>
         </div>
+        <br>
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
                 <div id="displaySealions" class="large-12 medium-12 cell">
