@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sea lion</title>
+    <link rel="stylesheet" href="css/foundation.css">
+    <link rel="stylesheet" href="css/app.css">
+    <!--Connect to firebase -->    
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <!--Load firestore -->   
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
+    <script src="firebase_connect.js"></script>  
+    <script src="add_user.js"></script>         
+    
+    </head>
+    <body onload="">    
+        <div class="grid-container">
+            <div class="grid-x grid-padding-x">
+                <div class="large-12 medium-12 cell">
+                    <div class="callout">
+                        <img src="images/logo.jpg" height="100" width="100" class="float-left" id="logo">
+                        <br>
+                        <h1 id="title">Admin Page</h1>    
+                        <br>
+                        <div class="grid-x grid-padding-x">
+                            <div class="large medium cell">
+                                <h3>Add new user</h3>
+                                <form id = "admin_form">
+                                    <fieldset>
+                                        <!-- Id will be auto added -->
+                                        <label for="email">Email: </label>
+                                        <input id="email" type="email" name="email">
+
+                                        <label for="password">Password: </label>
+                                        <input id="password" type="password" name="password">
+										
+										<input type="checkbox" id="read" value="read">Read<br>
+										<input type="checkbox" id="write" value="write">Write<br>
+										<input type="checkbox" id="update" value="update">Update<br>
+										<input type="checkbox" id="delete" value="delete" >Delete<br>
+
+                                        <input type="button" value="Add User" onclick="addUser()" class="button add">
+										
+										
+
+                                    </fieldset>
+                                </form>
+								
+                            </div>
+
+
+        <script>
+            $("body").on("click", "label", function(e) {
+            var getValue = $(this).attr("for");
+            var goToParent = $(this).parents(".select-size");
+            var getInputRadio = goToParent.find("input[id = " + getValue + "]");
+            console.log(getInputRadio.attr("id"));  
+            });
+        </script>
+
+
+        <script src="js/vendor/jquery.js"></script>
+        <script src="js/vendor/what-input.js"></script>
+        <script src="js/vendor/foundation.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
