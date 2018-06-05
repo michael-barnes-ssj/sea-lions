@@ -16,15 +16,17 @@
     <script src="firebase_connect.js"></script>    
     <script src="add_sealion.js"></script>
     <script src="display_sealion.js"></script>
+    <script src="permissions.js"></script>
     
     </head>
-    <body onload="displaySeaLion()">
+    <body onload="displaySeaLion(), getUser()">
         <nav class="hover-underline-menu" data-menu-underline-from-center>
 			<h1 class="menu title align-center">NZSLT Database</h1>
             <ul class="menu align-center">
                 <li><a href="search_sealion.html">Search Sealion</a></li>
-                <li><a href="add_sealion.html">Add a Sea Lion</a></li>
+                <li><a href="add_sealion.html">Add a Sea Lion</a></li>                
                 <li><a href="#">Display All</a></li>
+                <li onclick="checkPermissions()">Admin</li>
             </ul>
         </nav>
         <div class="grid-container">
