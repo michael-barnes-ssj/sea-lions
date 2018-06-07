@@ -20,12 +20,12 @@ var sealionIndexReference = 'id';
 var searchIndex = createIndex();
 
 async function searchExact() {
-    firebaseSearchResults[];
+    var firebaseSearchResults = [];
     filters = await getFilterValues();
     console.log('Filters are: ', filters);
-    firebaseSearchResults = await getData(filters);
+    firebaseSearchResults = await getFirestoreMatches(filters);
     console.log('Firebase search returned: ', firebaseSearchResults);
-    results = combineFeatureSearch(firebaseSearchResults);
+    results = await combineFeatureSearch(await getFirestoreMatches(filters));
     console.log(results);
 }
 
@@ -38,15 +38,17 @@ for (var i = 0; i < formInputIds.length; i++) {
 function combineFeatureSearch(existingMatches) {
     term = document.getElementById(featureSearchId).value;
     matches = [];
-    searchFeatures(term).then((ids)=>{
-        console.log("Lunr search matches: ", ids)
-        // NEED TO DEAL WITH CASE OF NO MATCHES
-        ids.forEach((id)=>{
-            if (existingMatches.includes(id)) {
-                matches.push(id);
-            }
-        });
-        return matches;
+    return new Promise((resolve)=>{
+        resolve(searchFeatures(term).then((ids)=>{
+            console.log("Lunr search matches: ", ids)
+            // NEED TO DEAL WITH CASE OF NO MATCHES
+            ids.forEach((id)=>{
+                if (existingMatches.includes(id)) {
+                    matches.push(id);
+                }
+            });
+            return matches;
+        }));
     });
 }
 
@@ -94,7 +96,7 @@ function getFirebaseProperty(input_id) {
 
 // Accepts array of filter objects to apply as search
 // Builds query by adding each filter and then executes
-function getData(filters) {
+function getFirestoreMatches(filters) {
     return new Promise((resolve)=>{
         query = db.collection("Sea Lions");
         // Apply each filter to the query
@@ -103,10 +105,11 @@ function getData(filters) {
         });
         //Retrieve the query data
         resolve(query.get().then(lions => {
+            var lionIds = [];
             lions.forEach(lion => {
-                console.log(lion.id, lion.data());
+                lionIds.push(lion.id);
             });
-            return lions;
+            return lionIds;
         }));
     });
 }
