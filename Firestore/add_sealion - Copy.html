@@ -6,6 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Sea lion</title>
+    <link rel="stylesheet" href="css/tabbedmenu.css">
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
     <!--Connect to firebase -->    
@@ -33,7 +34,13 @@
                         <br>
                         <h1 id="ptitle">ADD A SEA LION</h1> 
                         <div class="callout">
-                        <div class="grid-x grid-padding-x">
+                        <div class="tab">
+                        <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Details')">Details</button>
+                        <button class="tablinks" onclick="openTab(event, 'Tags')">Tags</button>
+                        <button class="tablinks" onclick="openTab(event, 'Feet')">Feet</button>
+                        </div>
+                        
+                            <div id="Details"  class="tabcontent">
                             <div class="large-4 medium-4 cell">
                                 <h3>Details</h3>
                                 <form>
@@ -53,13 +60,12 @@
                                         <label for="pob">POB: </label>
 										<select id="pob">    
                                         </select>                                       
-										<input name="pob" type="button" value="Add new Location" onclick="addToList(this)" class="button colwide">
+										<input name="pob" type="button" value="Add new Location" onclick="addToList(this)" class="button">
 
+                                        <br>
                                         <label for="gender">Gender: </label>
                                         <input id="gender" type="text" name="gender">
                                          
-                                        
-
                                         <label for="transponder">Transponder: </label>    
                                         <input id="transponder" type="text" name="transponder">
 
@@ -70,10 +76,11 @@
                                         </select> 
                                     </fieldset>
                                 </form>
-								<input href="display_all_sea_lion.html" type="button" value="Add Sea Lion" onclick="addSeaLion()" class="button colwide">
+							
                             </div>
+                        </div>
 
-
+                        <div id="Tags" class="tabcontent">
                             <div class="large-4 medium-4 cell">
                                 <h3>Tags</h3>
                                 <form>
@@ -90,12 +97,14 @@
                                         <label for="tagcolour">Tag colour: </label>      
                                         <select id="tagcolour">                    
                                         </select>
-                                        <input name="tagcolour" type="button" value="Add New Tag Colour" onclick="addToList(this)" class="button colwide">
-
+                                        
+                                        <input name="tagcolour" type="button" value="Add New Tag Colour" onclick="addToList(this)" class="button">
+                                        <br>
                                         <label for="tagtype">Tag type: </label>      
                                         <select id="tagtype">                                                                                                                                   
                                         </select>   
-                                        <input name="tagtype" type="button" value="Add New Tag Type" onclick="addToList(this)" class="button colwide">                                    
+                                        <input name="tagtype" type="button" value="Add New Tag Type" onclick="addToList(this)" class="button">   
+                                        <br>                                 
 
                                         <label for="tagnumber">Tag Number: </label>    
                                         <input id="tagnumber" type="text" name="tagnumber">
@@ -107,7 +116,9 @@
                                     </fieldset>
                                 </form>            
                             </div>
+                        </div>
 
+                        <div id="Feet" class="tabcontent">
                             <div class="large-4 medium-4 cell">
                                 <div id="features">
                                     <h3>Toes</h3>
@@ -141,16 +152,24 @@
                                         <label class="toe-label" for="rightfive">5</label>
                                     </div>
                                     <br>
-                                    <input type="button" value="Add Feature" onclick="createFeatures()"  class="button thirdcol">
+                                    <input type="button" value="Add Feature" onclick="createFeatures()"  class="button">
+
                                     <h3>Features</h3>
 
                                      
                                 </div> 
                             </div>
                         </div>
+                        <div class="add">
+                             <input  href="display_all_sea_lion.html" type="button" value="Add Sea Lion" onclick="addSeaLion()" class="button">
+                        </div>
+                           
+                 
+                            
+                        </div>
                         </div>
                         
-                </div>
+                
             </div>
         </div>
         <br>
@@ -171,6 +190,8 @@
             });
         </script>
 
+            <!-- Code for the menu tabs -->
+    <script type="text/javascript" src="js/menu-tab.js"></script>
 
         <script src="js/vendor/jquery.js"></script>
         <script src="js/vendor/what-input.js"></script>

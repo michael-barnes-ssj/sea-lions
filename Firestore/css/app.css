@@ -64,6 +64,14 @@ body{
 	margin:0 auto;
 }
 
+.add{
+	padding: 10px;
+}
+
+.form-container{
+	padding: 20px;
+}
+
 
 
 /* The Modal (background) */
