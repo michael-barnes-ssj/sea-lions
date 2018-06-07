@@ -13,23 +13,20 @@
   <nav class="hover-underline-menu" data-menu-underline-from-center>
       <h1 class="menu title align-center">NZSLT Database</h1>
       <ul class="menu align-center btm">
-        <li><a href="search_sealion.html">Search Sealion</a></li>
-        <li><a href="add_sealion.html">Add a Sea Lion</a></li>
-        <li><a href="#">Display All</a></li>
+        <li><a href="search_sealion - Copy.html">Search</a></li>
+        <li><a href="add_sealion - Copy.html">Add Sea Lion</a></li>
+        <li><a href="display_all_sea_lion.html">Display All</a></li>
         
     <input type="search" class="search-nav searchbar" placeholder="Enter Sea lion ID">
     <button type="button" class="button nav searchbtn">Quick Search</button>
       </ul>
   </nav>
 	
-	<div class="large-12 cell page-header"> 
-	</div>
-	
     <div class="grid-container">
 	<div class="grid-x grid-padding-x">
         <div class="large-12 cell">
         <br>
-        <h1 id="title">SEARCH SEA LION</h1>  
+        <h1 id="ptitle">SEARCH SEA LION</h1>  
           <div class="callout">
 		  <div class="grid-x grid-padding-x">
             <div class="large-4 medium-4 cell">
@@ -42,24 +39,30 @@
 
                                         <label for="mother">Mother: </label>
                                         <select id="mother">    
-                                            <option>--</option>
-                                            <option>Mum</option>    
+                                            <option>--</option>                                                
                                         </select> 
 
                                         <label for="dob">DOB: </label>
                                         <input id="dob" type="date" name="dob">
 
                                         <label for="pob">POB: </label>
-                                        <input id="pob" type="text" name="pob">
+										<select id="pob">    
+                                        </select>                                      
 
                                         <label for="gender">Gender: </label>
                                         <select id="gender">    
-                                            <option>Male</option>
-                                            <option>Female</option>    
+                                            <option>Male</option>  
+                                            <option>Female</option>                                           
                                         </select> 
 
                                         <label for="transponder">Transponder: </label>    
                                         <input id="transponder" type="text" name="transponder">
+
+                                        <label for="living_status">Living Status: </label>    
+                                        <select id="living_status">    
+                                            <option>Alive</option>
+                                            <option>Dead</option>    
+                                        </select> 
                                     </fieldset>
                                 </form>
                             </div>
@@ -69,24 +72,22 @@
                                 <h3>Tags</h3>
                                 <form>
                                     <fieldset> 
+                                        <label for="tagdatein">Tag date in: </label>     
+                                        <input id="tagdatein" type="date" name="tagdatein">
 
-                                        <label for="tagdate">Tag date: </label>     
-                                        <input id="tagdate" type="date" name="tagdate">
+                                        <label for="lefttagdateout">Left Tag date out: </label>     
+                                        <input id="lefttagdateout" type="date" name="lefttagdateout">
 
-                                        <label for="tagtype">Tag type: </label>      
-                                        <select id="tagtype"> 
-                                            <option>None</option> 
-                                            <option>Yellow Round</option> 
-                                            <option>White Round</option>
-                                            <option>Orange Round</option>
-                                            <option>Pink Coffin</option>
-                                            <option>Red Coffin</option>
-                                            <option>White Coffin</option>      
-                                            <option>Yellow Coffin</option>
+                                        <label for="righttagdateout">Right Tag date out: </label>     
+                                        <input id="righttagdateout" type="date" name="righttagdateout">
+
+                                        <label for="tagcolour">Tag colour: </label>      
+                                        <select id="tagcolour">                    
                                         </select>
 
-                                        <label for="tagdescription">Tag description: </label>
-                                        <input id="tagdescription" type="text" name="tagdecription">
+                                        <label for="tagtype">Tag type: </label>      
+                                        <select id="tagtype">                                                                                                                                   
+                                        </select>                                 
 
                                         <label for="tagnumber">Tag Number: </label>    
                                         <input id="tagnumber" type="text" name="tagnumber">
@@ -133,16 +134,13 @@
                                     </div>
                                     <br>
                                 </div>
-                                <button type="button" class="button search">Search</button> 
+                                <button type="button" class="button thirdcol">Search</button> 
                             </div>
 		  </div>
 		</div>
 	</div>
 	</div>
     </div>
-	
-	<div class="large-12 cell footer">
-	</div>
   
 
         <script>
@@ -160,3 +158,4 @@
     <script src="js/app.js"></script>
   </body>
 </html>
+

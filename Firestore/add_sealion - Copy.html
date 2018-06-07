@@ -6,6 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Sea lion</title>
+    <link rel="stylesheet" href="css/tabbedmenu.css">
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
     <!--Connect to firebase -->    
@@ -16,24 +17,31 @@
     <script src="firebase_connect.js"></script>    
     <script src="add_sealion.js"></script>
     <script src="display_sealion.js"></script>
+    <script src="populate_dropdowns.js"></script>
     
     </head>
-    <body onload="displaySeaLion()">
+    <body onload="fillDropdowns()">
         <nav class="hover-underline-menu" data-menu-underline-from-center>
 			<h1 class="menu title align-center">NZSLT Database</h1>
             <ul class="menu align-center">
-                <li><a href="search_sealion.html">Search Sealion</a></li>
-                <li><a href="add_sealion.html">Add a Sea Lion</a></li>
-                <li><a href="#">Display All</a></li>
+                <li><a href="search_sealion - Copy.html">Search</a></li>
+                <li><a href="add_sealion - Copy.html">Add Sea Lion</a></li>
+                <li><a href="display_all_sea_lion.html">Display All</a></li>
             </ul>
         </nav>
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
                 <div class="large-12 medium-12 cell">
                         <br>
-                        <h1 id="title">ADD A SEA LION</h1> 
+                        <h1 id="ptitle">ADD A SEA LION</h1> 
                         <div class="callout">
-                        <div class="grid-x grid-padding-x">
+                        <div class="tab">
+                        <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Details')">Details</button>
+                        <button class="tablinks" onclick="openTab(event, 'Tags')">Tags</button>
+                        <button class="tablinks" onclick="openTab(event, 'Feet')">Feet</button>
+                        </div>
+                        
+                            <div id="Details"  class="tabcontent">
                             <div class="large-4 medium-4 cell">
                                 <h3>Details</h3>
                                 <form>
@@ -44,52 +52,63 @@
 
                                         <label for="mother">Mother: </label>
                                         <select id="mother">    
-                                            <option>--</option>
-                                            <option>Mum</option>    
+                                            <option>--</option>                                                
                                         </select> 
 
                                         <label for="dob">DOB: </label>
                                         <input id="dob" type="date" name="dob">
 
                                         <label for="pob">POB: </label>
-                                        <input id="pob" type="text" name="pob">
+										<select id="pob">    
+                                        </select>                                       
+										<input name="pob" type="button" value="Add new Location" onclick="addToList(this)" class="button">
 
+                                        <br>
                                         <label for="gender">Gender: </label>
                                         <select id="gender">    
-                                            <option>Male</option>
-                                            <option>Female</option>    
-                                        </select> 
-
+                                            <option>Male</option>  
+                                            <option>Female</option>                                           
+                                        </select>
+                                         
                                         <label for="transponder">Transponder: </label>    
                                         <input id="transponder" type="text" name="transponder">
+
+                                        <label for="living_status">Living Status: </label>    
+                                        <select id="living_status">    
+                                            <option>Alive</option>
+                                            <option>Dead</option>    
+                                        </select> 
                                     </fieldset>
                                 </form>
-								<input type="button" value="Add Sea Lion" onclick="addSeaLion()" class="button add">
+							
                             </div>
+                        </div>
 
-
+                        <div id="Tags" class="tabcontent">
                             <div class="large-4 medium-4 cell">
                                 <h3>Tags</h3>
                                 <form>
                                     <fieldset> 
+                                        <label for="tagdatein">Tag date in: </label>     
+                                        <input id="tagdatein" type="date" name="tagdatein">
 
-                                        <label for="tagdate">Tag date: </label>     
-                                        <input id="tagdate" type="date" name="tagdate">
+                                        <label for="lefttagdateout">Left Tag date out: </label>     
+                                        <input id="lefttagdateout" type="date" name="lefttagdateout">
 
-                                        <label for="tagtype">Tag type: </label>      
-                                        <select id="tagtype"> 
-                                            <option>None</option> 
-                                            <option>Yellow Round</option> 
-                                            <option>White Round</option>
-                                            <option>Orange Round</option>
-                                            <option>Pink Coffin</option>
-                                            <option>Red Coffin</option>
-                                            <option>White Coffin</option>      
-                                            <option>Yellow Coffin</option>
+                                        <label for="righttagdateout">Right Tag date out: </label>     
+                                        <input id="righttagdateout" type="date" name="righttagdateout">
+
+                                        <label for="tagcolour">Tag colour: </label>      
+                                        <select id="tagcolour">                    
                                         </select>
-
-                                        <label for="tagdescription">Tag description: </label>
-                                        <input id="tagdescription" type="text" name="tagdecription">
+                                        
+                                        <input name="tagcolour" type="button" value="Add New Tag Colour" onclick="addToList(this)" class="button">
+                                        <br>
+                                        <label for="tagtype">Tag type: </label>      
+                                        <select id="tagtype">                                                                                                                                   
+                                        </select>   
+                                        <input name="tagtype" type="button" value="Add New Tag Type" onclick="addToList(this)" class="button">   
+                                        <br>                                 
 
                                         <label for="tagnumber">Tag Number: </label>    
                                         <input id="tagnumber" type="text" name="tagnumber">
@@ -101,7 +120,9 @@
                                     </fieldset>
                                 </form>            
                             </div>
+                        </div>
 
+                        <div id="Feet" class="tabcontent">
                             <div class="large-4 medium-4 cell">
                                 <div id="features">
                                     <h3>Toes</h3>
@@ -134,20 +155,28 @@
                                         <label class="toe-label" for="rightfour">4</label>
                                         <label class="toe-label" for="rightfive">5</label>
                                     </div>
-                                    <br> 
+                                    <br>
+                                    <input type="button" value="Add Feature" onclick="createFeatures()"  class="button">
+
                                     <h3>Features</h3>
 
-                                    <input type="button" value="Add Feature" onclick="createFeatures()"  class="button feature"> 
+                                     
                                 </div> 
                             </div>
                         </div>
-                        </div>     
-
-                        <h2>Sea lions currently in database</h2>
+                        <div class="add">
+                             <input  href="display_all_sea_lion.html" type="button" value="Add Sea Lion" onclick="addSeaLion()" class="button">
+                        </div>
+                           
+                 
+                            
+                        </div>
+                        </div>
                         
-                </div>
+                
             </div>
         </div>
+        <br>
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
                 <div id="displaySealions" class="large-12 medium-12 cell">
@@ -155,9 +184,6 @@
             </div>
         </div>
 
-	
-	<div class="large-12 cell footer">
-	</div>
 
         <script>
             $("body").on("click", "label", function(e) {
@@ -168,6 +194,8 @@
             });
         </script>
 
+            <!-- Code for the menu tabs -->
+    <script type="text/javascript" src="js/menu-tab.js"></script>
 
         <script src="js/vendor/jquery.js"></script>
         <script src="js/vendor/what-input.js"></script>

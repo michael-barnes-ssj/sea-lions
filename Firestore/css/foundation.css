@@ -550,7 +550,7 @@ textarea {
         flex: 0 0 auto; }
 
 .grid-x > .auto {
-  width: auto; }
+  width: auto;}
 
 .grid-x > .shrink {
   width: auto; }
@@ -812,7 +812,7 @@ textarea {
 
 .grid-padding-x .grid-padding-x {
   margin-right: -0.625rem;
-  margin-left: -0.625rem; }
+  margin-left: -0.625rem;}
   @media print, screen and (min-width: 40em) {
     .grid-padding-x .grid-padding-x {
       margin-right: -0.9375rem;
@@ -2322,7 +2322,7 @@ li {
 
 ul {
   margin-left: 1.25rem;
-  list-style-type: disc; }
+  list-style-type: disc;}
 
 ol {
   margin-left: 1.25rem; }
@@ -2510,8 +2510,15 @@ ul.no-bullet, ol.no-bullet {
   .button:hover, .button:focus {
     background-color: #14679e;
     color: #fefefe; }
-  .button.add{
-    width: 358px;
+  .button.colwide{
+    width: 100%;
+  }
+  .button.thirdcol{
+    width: 88%;
+  }
+  .button.update{
+    width: 450px;
+    margin-top: 15px;
   }
   .button.feature{
     width: 121px;
@@ -3331,7 +3338,7 @@ select {
 .callout {
   position: relative;
   margin: 0 0 1rem 0;
-  padding: 1rem;
+  padding: 0; 
   border: 1px solid rgba(10, 10, 10, 0.25);
   border-radius: 0;
   background-color: white;
@@ -3387,8 +3394,8 @@ select {
 
 .menu {
   padding: 0;
-  margin: 0;
   list-style: none;
+  margin: 0 auto;
   position: relative;
   display: -ms-flexbox;
   display: flex;
@@ -3536,11 +3543,15 @@ select {
   .menu.align-center li {
     display: -ms-flexbox;
     display: flex;
+    font-size: 25px;
     -ms-flex-pack: center;
         justify-content: center; }
     .menu.align-center li .submenu li {
       -ms-flex-pack: start;
           justify-content: flex-start; }
+    .menu.align-center.btm{
+      padding-bottom: 10px;
+    }
   .menu .menu-text {
     padding: 0.7rem 1rem;
     font-weight: bold;
@@ -5824,9 +5835,9 @@ a.thumbnail {
   width: 50px;
   height: 50px;
   text-align: center;
-  border: 1px solid #ddd;
+  border: 1px solid #B5AEAE;
   line-height: 50px;
-  cursor: pointer
+  cursor: pointer;
 }
 
 #leftone:checked ~ .toe-label[for="leftone"],
@@ -5852,4 +5863,77 @@ a.thumbnail {
   border: 1px solid;
   margin-bottom: 20px;
   padding: 10px;
+}
+
+.card{
+  padding: 20px;
+  border: 1px black solid;
+  margin-bottom: 30px;
+}
+
+.hover-underline-menu {
+  width: 100%;
+}
+
+.hover-underline-menu .menu {
+  background-color: #2C3840;
+}
+
+.hover-underline-menu .menu a {
+  color: #fefefe;
+  padding: 1.2rem 1.5rem;
+}
+
+.hover-underline-menu .menu .underline-from-center {
+  position: relative;
+}
+
+.hover-underline-menu .menu .underline-from-center::after {
+  content: "";
+  position: absolute;
+  top: calc(100% - 0.125rem);
+  border-bottom: 0.125rem solid #fefefe;
+  left: 50%;
+  right: 50%;
+  transition: all 0.5s ease;
+}
+
+.hover-underline-menu .menu .underline-from-center:hover::after {
+  left: 0;
+  right: 0;
+  transition: all 0.5s ease;
+}
+
+.page-title
+{
+  text-align: center;
+}
+
+.title
+{
+  color: white;
+  padding-top: 10px;
+  margin-bottom: -10px;
+  font-weight: bold;
+}
+
+.search-nav.searchbar
+{
+  width: 200px;
+  margin-top: 15px;
+  margin-right: 20px;
+  height: 35px;
+}
+
+.button.nav.searchbtn
+{
+  margin-top: 15px;
+  height: 35px;
+  padding-top: 9px;
+  width: 15%;
+}
+
+#ptitle{
+  margin-left: 7%;
+  font-weight: bold;
 }
