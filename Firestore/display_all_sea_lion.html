@@ -62,19 +62,23 @@
           </table>
         <br>
 
-        <script>
+        
+
+
+        
+    </body>
+
+    <script src="js/vendor/jquery.js"></script>
+        <script src="js/vendor/what-input.js"></script>
+        <script src="js/vendor/foundation.js"></script>
+        <script src="js/app.js"></script>
+
+    <script>
             $("body").on("click", "label", function(e) {
             var getValue = $(this).attr("for");
             var goToParent = $(this).parents(".select-size");
             var getInputRadio = goToParent.find("input[id = " + getValue + "]");
             console.log(getInputRadio.attr("id"));  
             });
-        </script>
-
-
-        <script src="js/vendor/jquery.js"></script>
-        <script src="js/vendor/what-input.js"></script>
-        <script src="js/vendor/foundation.js"></script>
-        <script src="js/app.js"></script>
-    </body>
+      </script>
 </html>
