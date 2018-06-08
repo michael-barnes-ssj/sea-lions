@@ -2,12 +2,13 @@
 // var formInputIds = ['name', 'mother', 'dob', 'pob', 'gender', 'transponder', 'tagdate', 'tagtype', 'tagdescription', 'tagnumber', 'rfnumber', 'leftattached', 'rightattached', 'leftone', 'lefttwo', 'leftthree', 'leftfour', 'leftfive', 'rightone', 'righttwo', 'rightthree', 'rightfour', 'rightfive'];
 // var sealionIndexFields = ['name', 'mother', 'dob', 'pob', 'gender', 'transponder', 'tag_date_in', 'type', 'tag_description', 'tag_number', 'rf_number', 'left_attached', 'right_attached', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
 
+//Cant search on: tag colour, tag type, alive/dead
 
 // Index of form input id needs to align with the index on the sealion index field to correctly populate the map
-const formInputIds = ['name', 'mother', 'dob', 'pob', 'gender', 'transponder', 'tagdate', 'tagtype', 'tagdescription', 'tagnumber', 'rfnumber', 'leftone', 'lefttwo', 'leftthree', 'leftfour', 'leftfive', 'rightone', 'righttwo', 'rightthree', 'rightfour', 'rightfive'];
-const sealionIndexFields = ['name', 'mother', 'dob', 'pob', 'gender', 'transponder', 'tag_date_in', 'type', 'tag_description', 'tag_number', 'rf_number', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
-const formInputIdsExclCheckboxes = ['name', 'mother', 'dob', 'pob', 'gender', 'transponder', 'tagdate', 'tagtype', 'tagdescription', 'tagnumber', 'rfnumber'];
-const featureSearchId = 'feature';
+const formInputIds = ['name', 'mother', 'pob', 'gender', 'transponder', 'tagnumber', 'rfnumber', 'leftone', 'lefttwo', 'leftthree', 'leftfour', 'leftfive', 'rightone', 'righttwo', 'rightthree', 'rightfour', 'rightfive'];
+const sealionIndexFields = ['name', 'mother', 'pob', 'gender', 'transponder', 'tag_number', 'rf_number', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
+const formInputIdsExclCheckboxes = ['name', 'mother', 'pob', 'gender', 'transponder', 'tagnumber', 'rfnumber'];
+const featureSearchId = 'features';
 const leftCheckboxName = "left";
 const rightCheckboxName = "right";
 
@@ -20,13 +21,25 @@ var sealionIndexReference = 'id';
 var searchIndex = createIndex();
 
 async function searchExact() {
+    clearOldSearchResults();
     var firebaseSearchResults = [];
     filters = await getFilterValues();
     console.log('Filters are: ', filters);
     firebaseSearchResults = await getFirestoreMatches(filters);
     console.log('Firebase search returned: ', firebaseSearchResults);
     results = await combineFeatureSearch(await getFirestoreMatches(filters));
-    console.log(results);
+    console.log(sealionsMap);
+    getResultMap(results);
+}
+
+function getResultMap(results) {
+        results.forEach(id => {
+            db.collection("Sea Lions").doc(id).get().then(function(document) 
+            {
+                sealionsMap.set(document.id, document.data());
+                createTable(document);
+            });
+        });
 }
 
 // Initialise map to match up the firebase properties to the form input fields
@@ -123,24 +136,10 @@ function nodelistToArray(nodelist) {
     return Array.prototype.slice.call(nodelist);
 }
 
-
-
-// function searchDisplay() {
-//     clearOldSearchResults();
-//     term = document.getElementById("search-text").value;
-//     search(term).then((ids)=>{
-//         console.log("Displaying: ", ids)
-//         // NEED TO DEAL WITH CASE OF NO MATCHES
-//         ids.forEach((id)=>{
-//             displaySeaLionById(id);
-//         });
-//     });
-// }
-
-// // Remove any previous search results from webpage
-// function clearOldSearchResults() {
-//     document.getElementById("displaySealions").innerHTML = "";
-// }
+// Remove any previous search results from webpage
+function clearOldSearchResults() {
+    document.getElementById("tbl_body").innerHTML = "";
+}
 
 // Search the index for any matches on the search term
 function searchFeatures(term) {

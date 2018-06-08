@@ -7,8 +7,18 @@
     <title>NZSLT Home</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
+            <!--Connect to firebase -->    
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+        <!--Load firestore -->   
+    <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase-firestore.js"></script>
+        <!--Include lunr for indexing/searching-->
+    <script src="https://unpkg.com/lunr/lunr.js"></script>
+    <script src="firebase_connect.js"></script>  
+    <script src="search.js"></script>
+    <script src="display_sealion.js"></script>
+    <script src="populate_dropdowns.js"></script>
   </head>
-  <body>
+  <body onload="fillDropdowns()">
   
   <nav class="hover-underline-menu" data-menu-underline-from-center>
       <h1 class="menu title align-center">NZSLT Database</h1>
@@ -39,27 +49,27 @@
 
                                         <label for="mother">Mother: </label>
                                         <select id="mother">    
-                                            <option>--</option>                                                
+                                            <option></option>                                                
                                         </select> 
 
-                                        <label for="dob">DOB: </label>
-                                        <input id="dob" type="date" name="dob">
-
                                         <label for="pob">POB: </label>
-										<select id="pob">    
+										<select id="pob">
+                                            <option></option>
                                         </select>                                      
 
                                         <label for="gender">Gender: </label>
                                         <select id="gender">    
+                                            <option></option>  
                                             <option>Male</option>  
                                             <option>Female</option>                                           
                                         </select> 
 
-                                        <label for="transponder">Transponder: </label>    
+                                        <label for="transponder">Transponder: </label>
                                         <input id="transponder" type="text" name="transponder">
 
                                         <label for="living_status">Living Status: </label>    
-                                        <select id="living_status">    
+                                        <select id="living_status">   
+                                            <option></option>   
                                             <option>Alive</option>
                                             <option>Dead</option>    
                                         </select> 
@@ -72,21 +82,14 @@
                                 <h3>Tags</h3>
                                 <form>
                                     <fieldset> 
-                                        <label for="tagdatein">Tag date in: </label>     
-                                        <input id="tagdatein" type="date" name="tagdatein">
-
-                                        <label for="lefttagdateout">Left Tag date out: </label>     
-                                        <input id="lefttagdateout" type="date" name="lefttagdateout">
-
-                                        <label for="righttagdateout">Right Tag date out: </label>     
-                                        <input id="righttagdateout" type="date" name="righttagdateout">
-
                                         <label for="tagcolour">Tag colour: </label>      
-                                        <select id="tagcolour">                    
+                                        <select id="tagcolour">         
+                                            <option></option>           
                                         </select>
 
                                         <label for="tagtype">Tag type: </label>      
-                                        <select id="tagtype">                                                                                                                                   
+                                        <select id="tagtype">    
+                                            <option></option>                                                                                                                               
                                         </select>                                 
 
                                         <label for="tagnumber">Tag Number: </label>    
@@ -94,6 +97,9 @@
 
                                         <label for="rfnumber">RF Number: </label>    
                                         <input id="rfnumber" type="text" name="rfnumber">
+
+                                        <label for="features">Features: </label>
+                                        <input id="features" type="text" name="features">
 
                                         <!-- Attached will start as true -->
                                     </fieldset>
@@ -107,17 +113,17 @@
                                     <h4>Left Clipped</h4>   
                                     <div class="select-size">
                                         <!-- Inputs/checkboxes are hidden in CSS, displaying labels -->
-                                        <input type="checkbox" id="leftone" name="left[]" value="1" > 
-                                        <input type="checkbox" id="lefttwo" name="left[]" value="2" >  
-                                        <input type="checkbox" id="leftthree" name="left[]" value="3" >  
-                                        <input type="checkbox" id="leftfour" name="left[]" value="4" >  
-                                        <input type="checkbox" id="leftfive" name="left[]" value="5" >        
+                                        <input type="checkbox" id="leftone" name="left" value="1" > 
+                                        <input type="checkbox" id="lefttwo" name="left" value="2" >  
+                                        <input type="checkbox" id="leftthree" name="left" value="3" >  
+                                        <input type="checkbox" id="leftfour" name="left" value="4" >  
+                                        <input type="checkbox" id="leftfive" name="left" value="5" >        
 
-                                        <input type="checkbox" id="rightone" name="right[]" value="1" > 
-                                        <input type="checkbox" id="righttwo" name="right[]" value="2" > 
-                                        <input type="checkbox" id="rightthree" name="right[]" value="3" >  
-                                        <input type="checkbox" id="rightfour" name="right[]" value="4" >  
-                                        <input type="checkbox" id="rightfive" name="right[]" value="5" >  
+                                        <input type="checkbox" id="rightone" name="right" value="1" > 
+                                        <input type="checkbox" id="righttwo" name="right" value="2" > 
+                                        <input type="checkbox" id="rightthree" name="right" value="3" >  
+                                        <input type="checkbox" id="rightfour" name="right" value="4" >  
+                                        <input type="checkbox" id="rightfive" name="right" value="5" >  
 
                                         <label class="toe-label" for="leftone">1</label>
                                         <label class="toe-label" for="lefttwo">2</label>
@@ -134,28 +140,62 @@
                                     </div>
                                     <br>
                                 </div>
-                                <button type="button" class="button thirdcol">Search</button> 
+                                <button type="button" class="button thirdcol" onclick="searchExact()">Search</button> 
                             </div>
 		  </div>
 		</div>
 	</div>
 	</div>
     </div>
-  
+    <div id="myModal" class="modal">
+          
+            <!-- Modal content -->
+            <div class="modal-content">
+              <div class="grid-x grid-padding-x">
+                <div id="displaySealions" class="large-12 medium-12 cell">
+                </div>
+              </div>
+            </div>
+          
+          </div>
+            
+            <div class="large-12 cell page-header">
+              <h1 class="page-title">Search Results</h1>
+            </div>
+            
+            <div class="table-scroll">
+            <table class="display-all">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Transponder</th>
+                <th>Living Status</th>
+                <th>Tag Colour</th>
+                <th>Tag Type</th>
+                <th>Tag Num</th>
+                <th>RF Num</th>			
+              </tr>
+            </thead>
+            <tbody id="tbl_body">
+            </tbody>
+          </table>
+        <br>
+    </body>
 
-        <script>
+    <script src="js/vendor/jquery.js"></script>
+        <script src="js/vendor/what-input.js"></script>
+        <script src="js/vendor/foundation.js"></script>
+        <script src="js/app.js"></script>
+
+    <script>
             $("body").on("click", "label", function(e) {
             var getValue = $(this).attr("for");
             var goToParent = $(this).parents(".select-size");
             var getInputRadio = goToParent.find("input[id = " + getValue + "]");
             console.log(getInputRadio.attr("id"));  
             });
-        </script>
-		  	
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
-  </body>
+      </script>
+  
 </html>
 

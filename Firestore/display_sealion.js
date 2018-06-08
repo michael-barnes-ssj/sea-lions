@@ -2,7 +2,7 @@ var featureMax = 0;
 var imageSrc = "";
 var rowLength;
 
-var sealions = new Map;
+var sealionsMap = new Map;
 
 //Gets data from firestore and calls create card on each sea lion
 function displaySeaLionTbl()
@@ -12,7 +12,7 @@ function displaySeaLionTbl()
         // Store each sea lion in a map to refer to later
         document.forEach(function(data)
         {
-            sealions.set(data.id, data.data());
+            sealionsMap.set(data.id, data.data());
         });
 
         document.forEach(createTable);        
@@ -76,7 +76,7 @@ function createTable(sealion)
 function createCard(key)
 { 
     // use sea lion id to get sea lion from map
-    var sealion = sealions.get(key);
+    var sealion = sealionsMap.get(key);
     
 
     var containerDiv = document.createElement
