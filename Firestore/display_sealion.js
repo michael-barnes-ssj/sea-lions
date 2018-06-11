@@ -159,7 +159,9 @@ function createCard(key)
     var clipped_title = document.createElement("p");
     clipped_title.innerHTML = "Clipped toes:";
     col3cell.appendChild(clipped_title);
-    for (var key in sealion) 
+
+
+    for (let key in sealion) 
     {
         if(sealion[key] == true)
         {
@@ -171,26 +173,30 @@ function createCard(key)
             col3cell.appendChild(fieldElement);
         }
     }  
-
-    //Gets all the features associated with sea lion. Updates inner html of element
-    getFeatures(sealion.id, col4cell);
+    	
     
-    var button = document.createElement('button');
+    //Gets all the features associated with sea lion. Updates inner html of element
+    getFeatures(key, col4cell);
+    
+    /*var button = document.createElement('button');
     button.className = "button update";
     button.innerHTML = 'Update';
     button.onclick = function()
     {
         window.location='update.html';
     };
-    col2cell.appendChild(button);    
+    col2cell.appendChild(button);    */
 }
 
 // Takes in sea lion id, searches features with that id. Fills passed in element with features string
 function getFeatures(id, div)
 { 
+    
     db.collection("Feature").where("id", "==", id).get().then(function(querySnapshot) 
     {   
         //Create features title 
+        
+        
         var title = document.createElement("p");
         title.innerHTML = "Features:";
         div.appendChild(title);    
@@ -198,6 +204,7 @@ function getFeatures(id, div)
         // Go through each feature and create desciption element
         querySnapshot.forEach(function(doc) 
         {            
+            console.log(doc.data());
             var featureElement = document.createElement("p");
             featureElement.innerHTML = doc.data().description;
             div.appendChild(featureElement);
@@ -240,7 +247,7 @@ function openModal(id)
     var span = document.getElementsByClassName("close")[0]; 
     
 
-    // When the user clicks on <span> (x), close the modal
+    /*// When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
     }
@@ -250,7 +257,7 @@ function openModal(id)
         if (event.target == modal) {
             modal.style.display = "none";
         }
-    }
+    }*/
 
 }
 
