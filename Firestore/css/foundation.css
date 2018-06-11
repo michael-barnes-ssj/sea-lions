@@ -2514,7 +2514,10 @@ ul.no-bullet, ol.no-bullet {
     width: 100%;
   }
   .button.thirdcol{
-    width: 88%;
+    width: 90%;
+  }
+  .button.add_third_col{
+    width: 29%;
   }
   .button.update{
     width: 450px;
