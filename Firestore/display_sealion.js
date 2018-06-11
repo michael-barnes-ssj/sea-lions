@@ -83,6 +83,7 @@ function createCard(key)
     var containerDiv = document.createElement
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
+    displayDiv.innerHTML = "";
 
     var grid = document.createElement("div");
     var card_container = document.createElement("div");
@@ -388,14 +389,6 @@ function createUpdateCard(key)
    
 }
 
-function updateSealion(key)
-{
-
-
-
-
-
-}
 
 function createCheckbox(id, name, value, checked, cell)
 {   
@@ -419,7 +412,8 @@ function deleteSealion(key)
 
 function updateSealion(key)
 {
-   createUpdateCard(key)
+    document.getElementById("displaySealions").innerHTML = "";
+    createUpdateCard(key)
 }
 
 function createFeaturesForEdit()
@@ -544,23 +538,18 @@ function openModal(id)
     sealionID = id.target.parentElement.id;
 	// Get the modal
     var modal = document.getElementById('myModal');  
+    
     modal.style.display = "block";
     createCard(sealionID);
 
     var span = document.getElementsByClassName("close")[0]; 
-    
 
-    /*// When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
+    //When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
-    }*/
+    }
 
 }
 

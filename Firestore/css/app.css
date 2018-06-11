@@ -46,6 +46,7 @@ body{
 	padding-top: 1.5%;
 }
 .callout{
+	padding: 30px;
 	margin: 80px;
 	margin-top: 0px;
 	margin-bottom: 0px;
@@ -62,10 +63,6 @@ body{
 }
 .display-all{
 	margin:0 auto;
-}
-
-.add{
-	padding: 10px;
 }
 
 .form-container{
