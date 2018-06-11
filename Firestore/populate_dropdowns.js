@@ -41,7 +41,7 @@ function addOptionToDropDown(value, dropdownName)
 {	
 	var dropDown = document.getElementById(dropdownName);
 	var newOption = document.createElement("option");	
-	console.log(value);
+	
 	newOption.value = value;
 	newOption.text = value;
 	dropDown.appendChild(newOption);
