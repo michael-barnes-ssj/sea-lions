@@ -178,14 +178,32 @@ function createCard(key)
     //Gets all the features associated with sea lion. Updates inner html of element
     getFeatures(key, col4cell);
     
-    /*var button = document.createElement('button');
+    var button = document.createElement('button');
     button.className = "button update";
     button.innerHTML = 'Update';
     button.onclick = function()
     {
-        window.location='update.html';
+        updateSealion(key);
     };
-    col2cell.appendChild(button);    */
+    col2cell.appendChild(button);    
+
+    var button = document.createElement('button');
+     button.className = "button";
+    button.innerHTML = 'Delete';
+    button.onclick = function()
+    {
+        deleteSealion(key);
+    };
+    col2cell.appendChild(button);  
+}
+
+function deleteSealion(key)
+{
+    db.collection("Sea Lions").doc(key).delete().then(function() {
+    console.log("Document successfully deleted!");
+    }).catch(function(error) {
+        console.error("Error removing document: ", error);
+    });
 }
 
 // Takes in sea lion id, searches features with that id. Fills passed in element with features string
