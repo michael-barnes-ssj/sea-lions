@@ -83,6 +83,7 @@ function createCard(key)
     var containerDiv = document.createElement
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
+    displayDiv.innerHTML = "";
 
     var grid = document.createElement("div");
     var card_container = document.createElement("div");
@@ -388,14 +389,6 @@ function createUpdateCard(key)
    
 }
 
-function updateSealion(key)
-{
-
-
-
-
-
-}
 
 function createCheckbox(id, name, value, checked, cell)
 {   
@@ -419,7 +412,8 @@ function deleteSealion(key)
 
 function updateSealion(key)
 {
-   createUpdateCard(key)
+    document.getElementById("displaySealions").innerHTML = "";
+    createUpdateCard(key)
 }
 
 function createFeaturesForEdit()
