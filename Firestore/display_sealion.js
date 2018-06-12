@@ -1,7 +1,7 @@
 var featureMax = 0;
 var imageSrc = "";
 var rowLength;
-var featureCount = 0;
+
 
 var sealionsMap = new Map;
 
@@ -72,6 +72,7 @@ function createTable(sealion)
     tbl_row.appendChild(tag_num);
     tbl_row.appendChild(rf_num);
 }
+
 
 // Take passed in sea lion object and iterates through creating html elements and diplays to screen.
 function createCard(key)
@@ -188,7 +189,8 @@ function createCard(key)
     button.innerHTML = 'Update';
     button.onclick = function()
     {
-       updateSealion(key);
+       // In update sealion.js 
+       createUpdateCard(key);
     };
     button_div.appendChild(button);    
 
@@ -202,213 +204,6 @@ function createCard(key)
     button_div.appendChild(button);  
 }
 
-function createDom(domName, domType, labelText, sealion, cell)
-{
-    var input = document.createElement("input");
-    var label = document.createElement("label");
-    var text = document.createTextNode(labelText)
-    input.setAttribute("type", domType);
-    input.name = domName;
-    input.id = domName;
-    label.setAttribute("for", domName);
-    label.appendChild(text);
-    input.value = sealion[domName];
-    cell.appendChild(label);  
-    cell.appendChild(input);
-}
-
-function createSelectDom(domName, labelText, sealion, cell)
-{
-    var input = document.createElement("select");
-    var label = document.createElement("label");
-    var text = document.createTextNode(labelText)
-    
-    input.name = domName;
-    input.id = domName;
-    label.setAttribute("for", domName);
-    label.appendChild(text);    
-    cell.appendChild(label);  
-    cell.appendChild(input);
-    getList(domName);
-
-    
-}
-
-
-
-function createUpdateCard(key)
-{ 
-    // use sea lion id to get sea lion from map
-    var sealion = sealionsMap.get(key);    
-    
-    var containerDiv = document.createElement
-    //Get ref to display div and create elements
-    var displayDiv = document.getElementById("displaySealions");
-
-    var grid = document.createElement("div");
-    var card_container = document.createElement("div");
-    grid.className = "grid-x grid-padding-x";
-    card_container.className = "card";
-    displayDiv.appendChild(card_container);
-    card_container.appendChild(grid);
-
-    var col1cell = document.createElement("div");
-    var col2cell = document.createElement("div");
-    var col3cell = document.createElement("div");
-    var col4cell = document.createElement("div");
-    col1cell.className = "large-3 medium-3 cell";
-    col2cell.className = "large-3 medium-3 cell";
-    col3cell.className = "large-3 medium-3 cell"; 
-    col4cell.className = "large-3 medium-3 cell";   
-
-    grid.appendChild(col1cell);
-    grid.appendChild(col2cell);
-    grid.appendChild(col3cell);
-    grid.appendChild(col4cell);
-
-    //Creating elements for each variable for the sea lion
-
-    //Create Name
-    createDom("name", "text", "Name:", sealion, col1cell);
-
-    //Create gender
-    var gender = document.createElement("select");
-    var genderLabel = document.createElement("label");
-    var genderText = document.createTextNode("Gender:")
-    gender.name = "gender";
-    genderLabel.setAttribute("for", "gender");
-    genderLabel.appendChild(genderText);
-    
-	var array = ["Male","Female"];
-
-    //Create and append the options
-    for (var i = 0; i < array.length; i++) 
-    {
-        var option = document.createElement("option");
-        option.value = array[i];
-        option.text = array[i];
-        gender.appendChild(option);
-    }
-    
-    col1cell.appendChild(genderLabel);  
-    col1cell.appendChild(gender); 
-
-    createDom("transponder", "text", "Transponder:", sealion, col1cell);
-    createDom("dob", "date", "DOB:", sealion, col1cell);
-   
-    //Create mother
-    var mother = document.createElement("select");
-    var motherLabel = document.createElement("label");
-    var motherText = document.createTextNode("Mother:")
-    mother.id = "mother";
-    mother.name = "mother";
-    motherLabel.setAttribute("for", "mother");
-    motherLabel.appendChild(motherText);
-    col1cell.appendChild(motherLabel);  
-    col1cell.appendChild(mother); 
-    getMothers();
-
-    createSelectDom("pob", "POB:", sealion, col1cell);      
-    createDom("tag_date_in", "date", "Tag Date in:", sealion, col2cell);
-    createSelectDom("tagtype", "Tag Type:", sealion, col2cell);  
-    createSelectDom("tagcolour", "Tag Colour:", sealion, col2cell);  
-    createDom("tag_number", "text", "Tag Number:", sealion, col2cell);
-    createDom("rf_number", "text", "Tag Number:", sealion, col2cell);
-    createDom("left_tag_date_out", "date", "Left Out:", sealion, col2cell);
-    createDom("right_tag_date_out", "date", "Right Out:", sealion, col2cell);
-   
-    var clipped_title = document.createElement("p");
-    clipped_title.innerHTML = "Clipped toes:";
-    col3cell.appendChild(clipped_title);
-
-    var leftTitle = document.createElement("p");
-    leftTitle.innerHTML = "Left Clipped:";
-    col3cell.appendChild(leftTitle);
-    
-    var leftkeys = ["left1", "left2", "left3", "left4", "left5"];
-    var rightkeys = ["right1", "right2", "right3", "right4", "right5"];
-    
-    for (var i = 0; i < leftkeys.length; i++)
-    {
-        console.log(sealion["leftone"]);
-        if(sealion[leftkeys[i]] == true)
-        {
-            console.log(sealion[leftkeys[i]]);
-            createCheckbox(leftkeys[i], leftkeys[i], 1, true, col3cell );
-        }
-        else if (sealion[leftkeys[i]] == false)
-        {
-            createCheckbox(leftkeys[i], leftkeys[i], 1, false, col3cell );
-        }
-    }
-
-    var rightClipped = document.createElement("p");
-    rightClipped.innerHTML = "Right Clipped:";
-    col3cell.appendChild(rightClipped);
-
-    for (var i = 0; i < rightkeys.length; i++)
-    {
-        console.log(sealion["leftone"]);
-        if(sealion[rightkeys[i]] == true)
-        {
-            console.log(sealion[rightkeys[i]]);
-            createCheckbox(rightkeys[i], rightkeys[i], 1, true, col3cell );
-        }
-        else if (sealion[rightkeys[i]] == false)
-        {
-            createCheckbox(rightkeys[i], rightkeys[i], 1, false, col3cell );
-        }
-    }
-
-     //Create features title  
-    var title = document.createElement("p");
-    title.innerHTML = "Features:";
-    col4cell.appendChild(title);
-    
-    //Gets all the features associated with sea lion. Updates inner html of element
-    getFeaturesForEdit(key, col4cell);    
-
-    
-
-    let addFeature = document.createElement("button");
-    addFeature.className = "button feature";
-    addFeature.innerHTML = 'Add Feature';
-    addFeature.onclick = createFeaturesForEdit;
-
-    console.log(addFeature)
-    col4cell.appendChild(addFeature);
-    	
-    var button_div = document.createElement("div");
-    button_div.className = "button_div";
-    grid.appendChild(button_div);
-    
-    let button = document.createElement('button');
-    button.className = "button submit_update";
-    button.innerHTML = 'Submit';
-    button.onclick = function()
-    {
-        updateSealion(key);
-    };
-    button_div.appendChild(button); 
-
-    let featureDiv = document.createElement("div");
-    featureDiv.id = "features";
-    col4cell.appendChild(featureDiv);   
-
-   
-}
-
-function createCheckbox(id, name, value, checked, cell)
-{   
-    var checkbox = document.createElement("INPUT");
-    checkbox.setAttribute("type", "checkbox");
-    checkbox.name = name;
-    checkbox.value = value;
-    checkbox.checked = checked;
-    cell.appendChild(checkbox);
-
-}
-
 function deleteSealion(key)
 {
     db.collection("Sea Lions").doc(key).delete().then(function() {
@@ -418,46 +213,13 @@ function deleteSealion(key)
     });
 }
 
-function updateSealion(key)
-{
-    document.getElementById("displaySealions").innerHTML = "";
-    createUpdateCard(key)
-}
-
-function createFeaturesForEdit()
-{      
-    featureCount = -1;
-
-    var form = document.createElement('form');    
-    var field = document.createElement('fieldset');
-    var label = document.createElement('label');
-    var textarea = document.createElement('textarea');          
-    var input=document.createElement('input');
-    var div = document.getElementById("features");
-
-    label.htmlFor = "featuredescription"+featureCount;
-    label.innerHTML = "Description: ";
-    form.className= "pure-form pure-form-stacked";
-    textarea.id = "featuredescription"+featureCount; 
-    input.type="file";
-    input.multiple = true;
-    input.id = "files"+featureCount+"[]";
-
-    form.appendChild(field);
-    field.appendChild(label);
-    field.appendChild(textarea);
-    field.appendChild(input);    
-    div.appendChild(form);    
-}
 
 // Takes in sea lion id, searches features with that id. Fills passed in element with features string
 function getFeatures(id, div)
-{ 
-    
+{     
     db.collection("Feature").where("id", "==", id).get().then(function(querySnapshot) 
     {   
-        //Create features title 
-        
+        //Create features title        
         
         var title = document.createElement("p");
         title.innerHTML = "Features:";
@@ -487,47 +249,6 @@ function getFeatures(id, div)
     });
 }
 
-function getImage(id, index, element)
-{    
-    var imageRef = id+"/image"+index; 
-	
-    firebase.storage().ref().child(imageRef).getDownloadURL().then(function(url)
-    {        
-        element.src = url;        
-    });
-}
-
-// Takes in sea lion id, searches features with that id. Fills passed in element with features string
-function getFeaturesForEdit(id, div)
-{ 
-    
-    db.collection("Feature").where("id", "==", id).get().then(function(querySnapshot) 
-    {   
-        
-        // Go through each feature and create desciption element
-        querySnapshot.forEach(function(doc) 
-        {        
-            featureCount++;               
-            var featureElement = document.createElement("input");
-            featureElement.setAttribute("type", "text");
-            featureElement.value = doc.data().description;
-            div.appendChild(featureElement);
-
-            // For each image the feature has, create element and fill it with image
-            for (var i = 0; i < doc.data().images; i++)
-            {
-                var img = document.createElement("img");
-                img.className = "smallImage";
-                getImage(doc.id, i, img);
-                div.appendChild(img);                
-            } 
-        }); 
-    })
-    .catch(function(error) 
-    {
-        console.log("Error getting documents: ", error);
-    });
-}
 
 function getImage(id, index, element)
 {    
@@ -538,7 +259,6 @@ function getImage(id, index, element)
         element.src = url;        
     });
 }
-
 
 function openModal(id)
 {
@@ -555,7 +275,7 @@ function openModal(id)
     //When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = "none";
+            modal.style.display = "none";            
         }
     }
 
