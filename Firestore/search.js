@@ -1,45 +1,38 @@
-// !!!!!! FORM FIELDS INCLUDING LEFT AND RIGHT ATTACHED
-// var formInputIds = ['name', 'mother', 'dob', 'pob', 'gender', 'transponder', 'tagdate', 'tagtype', 'tagdescription', 'tagnumber', 'rfnumber', 'leftattached', 'rightattached', 'leftone', 'lefttwo', 'leftthree', 'leftfour', 'leftfive', 'rightone', 'righttwo', 'rightthree', 'rightfour', 'rightfive'];
-// var sealionIndexFields = ['name', 'mother', 'dob', 'pob', 'gender', 'transponder', 'tag_date_in', 'type', 'tag_description', 'tag_number', 'rf_number', 'left_attached', 'right_attached', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
-
-//Cant search on: tag colour, tag type, alive/dead
-
 // Index of form input id needs to align with the index on the sealion index field to correctly populate the map
-const formInputIds = ['name', 'mother', 'pob', 'gender', 'transponder', 'tagnumber', 'rfnumber', 'leftone', 'lefttwo', 'leftthree', 'leftfour', 'leftfive', 'rightone', 'righttwo', 'rightthree', 'rightfour', 'rightfive'];
-const sealionIndexFields = ['name', 'mother', 'pob', 'gender', 'transponder', 'tag_number', 'rf_number', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
-const formInputIdsExclCheckboxes = ['name', 'mother', 'pob', 'gender', 'transponder', 'tagnumber', 'rfnumber'];
+const formInputIds = ['name', 'mother', 'pob', 'gender', 'transponder', 'living_status', 'tagcolour', 'tagtype', 'tagnumber', 'rfnumber', 'leftone', 'lefttwo', 'leftthree', 'leftfour', 'leftfive', 'rightone', 'righttwo', 'rightthree', 'rightfour', 'rightfive'];
+const sealionIndexFields = ['name', 'mother', 'pob', 'gender', 'transponder', 'living_status', 'colour', 'type', 'tag_number', 'rf_number', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
+const formInputIdsExclCheckboxes = ['name', 'mother', 'pob', 'gender', 'transponder', 'living_status', 'tagcolour', 'tagtype', 'tagnumber', 'rfnumber'];
 const featureSearchId = 'features';
 const leftCheckboxName = "left";
 const rightCheckboxName = "right";
 
-// Indexing for lunr text search on features
-//var sealionIndexFields = ['features', 'colour', 'dob', 'gender', 'left1', 'left2', 'left3', 'left4', 'left5', 'left_tag_date_out', 'living_status', 'mother', 'name', 'pob', 'rf_number', 'right1', 'right2', 'right3', 'right4', 'right5', 'right_tag_date_out', 'tag_date_in', 'tag_number', 'transponder', 'type'];
 var lunrIndexFields = ['features'];
 var sealionIndexReference = 'id';
 
 //Create lunr index on page load
 var searchIndex = createIndex();
 
+// Search for sealions using firestore queries and lunr text search for features
 async function searchExact() {
     clearOldSearchResults();
     var firebaseSearchResults = [];
     filters = await getFilterValues();
-    console.log('Filters are: ', filters);
-    firebaseSearchResults = await getFirestoreMatches(filters);
-    console.log('Firebase search returned: ', firebaseSearchResults);
     results = await combineFeatureSearch(await getFirestoreMatches(filters));
-    console.log(sealionsMap);
-    getResultMap(results);
+    displaySealions(results).then(alert("Search complete"));
 }
 
-function getResultMap(results) {
-        results.forEach(id => {
+// Get sealions to display to webpage
+function displaySealions(results) {
+    return new Promise((resolve)=>{
+        resolve(results.forEach(id => {
             db.collection("Sea Lions").doc(id).get().then(function(document) 
             {
                 sealionsMap.set(document.id, document.data());
                 createTable(document);
             });
-        });
+            
+        }));
+    });
 }
 
 // Initialise map to match up the firebase properties to the form input fields
@@ -48,13 +41,13 @@ for (var i = 0; i < formInputIds.length; i++) {
     formInputsToFirebase.set(formInputIds[i], sealionIndexFields[i]);
 }
 
+// Cross checks firestore search results and feature search reuslts from lunr
+// Returns only those that matched both
 function combineFeatureSearch(existingMatches) {
     term = document.getElementById(featureSearchId).value;
     matches = [];
     return new Promise((resolve)=>{
         resolve(searchFeatures(term).then((ids)=>{
-            console.log("Lunr search matches: ", ids)
-            // NEED TO DEAL WITH CASE OF NO MATCHES
             ids.forEach((id)=>{
                 if (existingMatches.includes(id)) {
                     matches.push(id);
