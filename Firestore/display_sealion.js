@@ -78,8 +78,6 @@ function createCard(key)
 { 
     // use sea lion id to get sea lion from map
     var sealion = sealionsMap.get(key);
-    
-
     var containerDiv = document.createElement
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
@@ -234,12 +232,10 @@ function createSelectDom(domName, labelText, sealion, cell)
 function createUpdateCard(key)
 { 
     // use sea lion id to get sea lion from map
-    var sealion = sealionsMap.get(key);    
-    
+    var sealion = sealionsMap.get(key);        
     var containerDiv = document.createElement
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
-
     var grid = document.createElement("div");
     var card_container = document.createElement("div");
     grid.className = "grid-x grid-padding-x";
@@ -259,9 +255,7 @@ function createUpdateCard(key)
     grid.appendChild(col1cell);
     grid.appendChild(col2cell);
     grid.appendChild(col3cell);
-    grid.appendChild(col4cell);
-
-    //Creating elements for each variable for the sea lion
+    grid.appendChild(col4cell);   
 
     //Create Name
     createDom("name", "text", "Name:", sealion, col1cell);
@@ -283,6 +277,11 @@ function createUpdateCard(key)
         option.value = array[i];
         option.text = array[i];
         gender.appendChild(option);
+    }    
+   
+    while (array[gender.selectedIndex] != sealion["gender"])
+    {
+        gender.selectedIndex++;
     }
     
     col1cell.appendChild(genderLabel);  
@@ -298,9 +297,18 @@ function createUpdateCard(key)
     mother.id = "mother";
     mother.name = "mother";
     motherLabel.setAttribute("for", "mother");
+
+    let motherOption = document.createElement("option");
+    motherOption.value = sealion["mother"]; 
+    motherOption.text = sealion["mother"];
+    mother.appendChild(motherOption);
+
+
     motherLabel.appendChild(motherText);
     col1cell.appendChild(motherLabel);  
     col1cell.appendChild(mother); 
+    
+
     getMothers();
 
     createSelectDom("pob", "POB:", sealion, col1cell);      
@@ -363,8 +371,6 @@ function createUpdateCard(key)
     //Gets all the features associated with sea lion. Updates inner html of element
     getFeaturesForEdit(key, col4cell);    
 
-    
-
     let addFeature = document.createElement("button");
     addFeature.className = "button";
     addFeature.innerHTML = 'Add Feature';
@@ -385,8 +391,6 @@ function createUpdateCard(key)
     let featureDiv = document.createElement("div");
     featureDiv.id = "features";
     col4cell.appendChild(featureDiv);   
-
-   
 }
 
 
