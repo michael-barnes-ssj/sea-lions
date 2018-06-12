@@ -176,7 +176,10 @@ function createCard(key)
         }
     }  
     	
-    
+    var button_div = document.createElement("div");
+    button_div.className = "button_div";
+    grid.appendChild(button_div);
+
     //Gets all the features associated with sea lion. Updates inner html of element
     getFeatures(key, col4cell);
     
@@ -187,7 +190,7 @@ function createCard(key)
     {
        updateSealion(key);
     };
-    col1cell.appendChild(button);    
+    button_div.appendChild(button);    
 
     var button = document.createElement('button');
      button.className = "button delete";
@@ -196,7 +199,7 @@ function createCard(key)
     {
         deleteSealion(key);
     };
-    col4cell.appendChild(button);  
+    button_div.appendChild(button);  
 }
 
 function createDom(domName, domType, labelText, sealion, cell)
@@ -366,12 +369,16 @@ function createUpdateCard(key)
     
 
     let addFeature = document.createElement("button");
-    addFeature.className = "button";
+    addFeature.className = "button feature";
     addFeature.innerHTML = 'Add Feature';
     addFeature.onclick = createFeaturesForEdit;
 
     console.log(addFeature)
     col4cell.appendChild(addFeature);
+    	
+    var button_div = document.createElement("div");
+    button_div.className = "button_div";
+    grid.appendChild(button_div);
     
     let button = document.createElement('button');
     button.className = "button submit_update";
@@ -380,7 +387,7 @@ function createUpdateCard(key)
     {
         updateSealion(key);
     };
-    col1cell.appendChild(button); 
+    button_div.appendChild(button); 
 
     let featureDiv = document.createElement("div");
     featureDiv.id = "features";
