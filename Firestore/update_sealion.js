@@ -233,9 +233,20 @@ function createCheckbox(id, name, value, checked, cell)
     var checkbox = document.createElement("INPUT");
     checkbox.setAttribute("type", "checkbox");
     checkbox.name = name;
+    checkbox.id = id;
+
     checkbox.value = value;
     checkbox.checked = checked;
+
+    let label = document.createElement('label');
+    label.className = "toe-label";
+    label.setAttribute("for", id);
+
+
+
+    
     cell.appendChild(checkbox);
+    cell.appendChild(label);
 }
 
 function createFeaturesForEdit()
@@ -349,10 +360,12 @@ function update()
     )
     .then(function() {
         console.log("Document successfully updated!");
+        location.reload();
     })
     .catch(function(error) {
         // The document probably doesn't exist.
         console.error("Error updating document: ", error);
+
     });
 
 
