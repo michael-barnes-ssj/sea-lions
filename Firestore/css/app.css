@@ -107,3 +107,23 @@ body{
     text-decoration: none;
     cursor: pointer;
 }
+#displaySealions{
+	padding:0px;
+}
+.card{
+	margin-bottom: 0px;
+}
+
+.col4 {
+    position:relative;
+}
+.button.delete {
+    position:absolute;
+    bottom:0;
+    right:10%;
+	width: 40%;
+}
+.button.submit_update{
+	margin-top: 30%;
+	width: 209%;
+}
