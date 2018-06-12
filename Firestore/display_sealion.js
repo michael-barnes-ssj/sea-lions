@@ -230,6 +230,8 @@ function createSelectDom(domName, labelText, sealion, cell)
     cell.appendChild(label);  
     cell.appendChild(input);
     getList(domName);
+
+    
 }
 
 
@@ -313,7 +315,7 @@ function createUpdateCard(key)
     createDom("tag_number", "text", "Tag Number:", sealion, col2cell);
     createDom("rf_number", "text", "Tag Number:", sealion, col2cell);
     createDom("left_tag_date_out", "date", "Left Out:", sealion, col2cell);
-    createDom("right_tag_date_out", "date", "Right Out:", sealion, col2cell);  
+    createDom("right_tag_date_out", "date", "Right Out:", sealion, col2cell);
    
     var clipped_title = document.createElement("p");
     clipped_title.innerHTML = "Clipped toes:";
@@ -395,7 +397,6 @@ function createUpdateCard(key)
 
    
 }
-
 
 function createCheckbox(id, name, value, checked, cell)
 {   

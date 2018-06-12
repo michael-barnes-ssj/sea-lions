@@ -5843,16 +5843,16 @@ a.thumbnail {
   cursor: pointer;
 }
 
-#leftone:checked ~ .toe-label[for="leftone"],
-#lefttwo:checked ~ .toe-label[for="lefttwo"],
-#leftthree:checked ~ .toe-label[for="leftthree"],
-#leftfour:checked ~ .toe-label[for="leftfour"],
-#leftfive:checked ~ .toe-label[for="leftfive"],
-#rightone:checked ~ .toe-label[for="rightone"],
-#righttwo:checked ~ .toe-label[for="righttwo"],
-#rightthree:checked ~ .toe-label[for="rightthree"],
-#rightfour:checked ~ .toe-label[for="rightfour"],
-#rightfive:checked ~ .toe-label[for="rightfive"]
+#left1:checked ~ .toe-label[for="left1"],
+#left2:checked ~ .toe-label[for="left2"],
+#left3:checked ~ .toe-label[for="left3"],
+#left4:checked ~ .toe-label[for="left4"],
+#left5:checked ~ .toe-label[for="left5"],
+#right1:checked ~ .toe-label[for="right1"],
+#right2:checked ~ .toe-label[for="right2"],
+#right3:checked ~ .toe-label[for="right3"],
+#right4:checked ~ .toe-label[for="right4"],
+#right5:checked ~ .toe-label[for="right5"]
 {
   background: #999;
   color: #ffffff;
