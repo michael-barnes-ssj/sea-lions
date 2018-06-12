@@ -222,8 +222,7 @@ function createUpdateCard(key)
     let button = document.createElement('button');
     button.className = "button update";
     button.innerHTML = 'Submit';
-    button.onclick = updateSealion;  
-    button.onclick = updateFeatues; 
+    button.onclick = update;      
      
     col2cell.appendChild(button); 
 
@@ -247,9 +246,6 @@ function createCheckbox(id, name, value, checked, cell)
     let label = document.createElement('label');
     label.className = "toe-label";
     label.setAttribute("for", id);
-
-
-
     
     cell.appendChild(checkbox);
     cell.appendChild(label);
@@ -301,8 +297,7 @@ function getFeaturesForEdit(id, div)
             var deletecheckbox = document.createElement("INPUT");
             deletecheckbox.setAttribute("type", "checkbox");
             deletecheckbox.name = "delete_checkbox";
-            deletecheckbox.id = "delete"+doc.id;
-            
+            deletecheckbox.id = "delete"+doc.id;            
 
             div.appendChild(featureElement);
             div.appendChild(deletecheckbox);
@@ -337,57 +332,22 @@ function isChecked(name, index)
     return checked;
 }
 
-function updateFeatues()
+
+
+function update()
 {
+    updateSealion();
+    updateFeatues();
+
     if (newFeature)
     {
-        addFeaturesForEdit(currentSealionKey);
+        addNewFeatures();
     }
-
-
-    for (let i = 0; i < featureIds.length; i++)
-    {
-        console.log("Test " +featureIds[i]);
-        var featureRef = db.collection("Feature").doc(featureIds[i]);
-
-        featureRef.update
-        (
-            {
-                description : document.getElementById(featureIds[i]).value
-            }
-            
-        )
-        .then(function() {
-            console.log("Document successfully updated!");
-            
-            if (i == featureIds.length-1)
-            {
-                deleteFeatures();
-            //     location.reload();
-            }
-            
-        })
-        .catch(function(error) {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-
-        });
-
-    }
-
-    
-
-    
-
-    
 
 }
 
-
-
-
 function updateSealion()
-{
+{    
     var sealionRef = db.collection("Sea Lions").doc(currentSealionKey);    
 
     var sealionUpdatedData = 
@@ -418,15 +378,14 @@ function updateSealion()
 		right5: isChecked("right", 4),   
             
     };
-
-    // Set the "capital" field of the city 'DC'
+    
     return sealionRef.update
     (
         sealionUpdatedData
     )
-    .then(function() {
-        console.log("Document successfully updated!");
-    
+    .then(function() 
+    {        
+        console.log("Document successfully updated!");    
     })
     .catch(function(error) {
         // The document probably doesn't exist.
@@ -435,9 +394,36 @@ function updateSealion()
     });
 }
 
-function addFeaturesForEdit(id)
-{    
-          
+function updateFeatues()
+{ 
+    for (let i = 0; i < featureIds.length; i++)
+    {
+        console.log("Test " +featureIds[i]);
+        var featureRef = db.collection("Feature").doc(featureIds[i]);
+
+        featureRef.update({ description : document.getElementById(featureIds[i]).value}).then(function() 
+        {
+            console.log("Document successfully updated!");
+            
+            //If last feature has been updated, then delete features
+            if (i == featureIds.length-1)
+            {
+                deleteFeatures();                 
+            }
+            
+        })
+        .catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+
+        });
+    }    
+}
+
+function addNewFeatures()
+{       
+    id = currentSealionKey;
+
     //Loop through all the features
     for (var featuresIndex = 0; featuresIndex < featureCount;  featuresIndex++)
     {            
@@ -447,7 +433,7 @@ function addFeaturesForEdit(id)
         db.collection("Feature").add(feature_object).then(function(feature)
         {
             console.log("Document written with ID: ", feature.id);                
-            uploadImageForEdit(feature.id);
+            uploadNewImages(feature.id);            
 
         }).catch(function(error) 
         {
@@ -458,7 +444,7 @@ function addFeaturesForEdit(id)
 }
 
 //uploads images and stores them under sea lions unique id
-function uploadImageForEdit(id)
+function uploadNewImages(id)
 {        
     //Get the name of the array holding files
     var filesarray = "files"+fileindex+"[]";
@@ -483,26 +469,22 @@ function uploadImageForEdit(id)
         for (var imageIndex = 0; imageIndex < files.length; imageIndex++)
         {
             var storageRef = firebase.storage().ref(id + "/image" + imageIndex); 
-            var task = storageRef.put(files[imageIndex]);
-
-            //Add error handling - See firebase docs
+            storageRef.put(files[imageIndex]);
         }
     }  
     fileindex++; 
-                
-       
 }
-
-
 
 function deleteFeatures()
 {    
+    deleting = false;
     checkboxes = document.getElementsByName("delete_checkbox");    
     
     for (let i = 0; i < checkboxes.length; i++)
     {
         if (checkboxes[i].checked)
-        {             
+        {  
+            deleting = true;           
             id = checkboxes[i].id.substring(6);
             
             ref = db.collection("Feature").doc(id);
@@ -515,56 +497,37 @@ function deleteFeatures()
                 console.error("Error adding document: ", error);
             });
 
-            deleteImage(id);
-
-            // ref.get().then(function(feature)
-            // {
-                
-            //     
-                
-                
-                
-
-            // });              
+            deleteImage(id);                          
         }
-    }
-
-    
+    } 
 }
 
-function deleteImage(id)
+async function deleteImage(id)
 {
-
-    let promises = []
     let hasImages = true;
     let i = 0;
-    
-    while (hasImages)
-    {
-        
+
+    while (hasImages == true)
+    { 
         path = id+"/"+"image"+i;
         
         let storageRef = firebase.storage().ref(path); 
-        console.log(path);
-        promises.push
-        (
-            storageRef.delete().then(function()
-            {
-            // File deleted successfully
-                i++;
-                console.log(id+ " deleted");
-            }).catch(function(error) {
-                hasImages = false;
-                console.log(error);
-            })
-            
-        );
-        Promise.all(promises);
+               
+        await storageRef.delete().then(function()
+        {
+        // File deleted successfully                
+            console.log(id+ " deleted");
+
+        }).catch(function(error) { 
+            hasImages = false;
+        })
+
+        if (i == 100)
+        {
+            hasImages = false;
+        }
+        i++;
     }
-
-    
-
-             
 }
 
 
