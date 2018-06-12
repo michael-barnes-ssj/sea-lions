@@ -181,7 +181,7 @@ function createCard(key)
     getFeatures(key, col4cell);
     
     var button = document.createElement('button');
-    button.className = "button update";
+    button.className = "button  submit_update";
     button.innerHTML = 'Update';
     button.onclick = function()
     {
