@@ -5,12 +5,16 @@ body
 .smallImage
 {
     
-    width: 100px;
+    width: 60%;
 }
 
 .sealionDiv
 {
     border: 2px solid black;
     margin: 2%;
+}
+
+.cell {
+    padding: 20px;
 }
 

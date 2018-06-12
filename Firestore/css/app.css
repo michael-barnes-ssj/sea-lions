@@ -1,0 +1,109 @@
+body{
+	background-color: #E8EAED;
+}
+.sticky-topbar {
+	width: 100%;
+}
+.top-bar{
+	height: 100px;
+	padding: 0;
+}
+.nav-title{
+	float: left;
+	margin: 10px;
+	color: white;
+}
+.nav-button{
+	float: left;
+	display: inline;
+	padding: 4.7%;
+	height: 100%;
+	font-size: 20px;
+}
+.nav-button:hover{
+	background-color: #DCDEE0;
+}
+.large-4.medium-4.small-4.cell.nav{
+	background-color: #373E47;
+}
+.search-nav{
+	width: 40%;
+	float: right;
+	margin: 10px;
+	margin-top: 23px;
+}
+.button.nav{
+	width: 25%;
+	float: right;
+	margin: 10px;
+	margin-top: 23px;
+}
+.large-12.cell.page-header{
+	height: 120px;
+}
+.page-title{
+	text-align: center;
+	padding-top: 1.5%;
+}
+.callout{
+	padding: 30px;
+	margin: 80px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.button.search{
+	float: right;
+	width: 40%;
+}
+.large-12.cell.footer{
+	position:absolute;
+    bottom:0;
+	height: 40px;
+	background-color: #373E47;
+}
+.display-all{
+	margin:0 auto;
+}
+
+.form-container{
+	padding: 20px;
+}
+
+
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: white;
+    margin: 15% auto; /* 15% from the top and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

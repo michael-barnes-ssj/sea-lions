@@ -5,8 +5,7 @@ var fileArrayIndex = 0;
 
 //Creates html to upload features
 function createFeatures()
-{  
-    
+{      
     featureCount++;
 
     var form = document.createElement('form');    
@@ -124,13 +123,14 @@ function addSeaLion()
         pob:  checkIfEmpty(document.getElementById("pob").value),
         gender: checkIfEmpty(document.getElementById("gender").value),
         transponder: checkIfEmpty(document.getElementById("transponder").value),   
-		tag_date_in: checkIfEmpty(document.getElementById("tagdate").value),
+        living_status: checkIfEmpty(document.getElementById("living_status").value),   
+		tag_date_in: checkIfEmpty(document.getElementById("tagdatein").value),
+        left_tag_date_out: checkIfEmpty(document.getElementById("lefttagdateout").value),
+        right_tag_date_out: checkIfEmpty(document.getElementById("righttagdateout").value),
 		type: checkIfEmpty(document.getElementById("tagtype").value),
-		tag_description: checkIfEmpty(document.getElementById("tagdescription").value),
+        colour: checkIfEmpty(document.getElementById("tagcolour").value),		
 		tag_number: checkIfEmpty(document.getElementById("tagnumber").value),
-		rf_number: checkIfEmpty(document.getElementById("rfnumber").value),
-		left_attached: "Yes",
-		right_attached: "Yes",	
+		rf_number: checkIfEmpty(document.getElementById("rfnumber").value),		
 		left1: left[0],
 		left2: left[1],
 		left3: left[2],
