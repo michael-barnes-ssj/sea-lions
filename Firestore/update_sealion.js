@@ -1,6 +1,9 @@
 var featureCount = 0;
 var currentSealionKey;
 
+var featureIds = [];
+var newFeature = false;
+
 function createDom(domName, domType, labelText, sealion, cell)
 {
     var input = document.createElement("input");
@@ -218,7 +221,8 @@ function createUpdateCard(key)
     let button = document.createElement('button');
     button.className = "button update";
     button.innerHTML = 'Submit';
-    button.onclick = update;    
+    button.onclick = updateSealion;  
+    button.onclick = updateFeatues;  
     col2cell.appendChild(button); 
 
     // Add div to put new features in
@@ -251,6 +255,9 @@ function createCheckbox(id, name, value, checked, cell)
 
 function createFeaturesForEdit()
 {      
+    newFeature = true;
+    
+
     var form = document.createElement('form');    
     var field = document.createElement('fieldset');
     var label = document.createElement('label');
@@ -270,7 +277,9 @@ function createFeaturesForEdit()
     field.appendChild(label);
     field.appendChild(textarea);
     field.appendChild(input);    
-    div.appendChild(form);    
+    div.appendChild(form); 
+    
+    featureCount++;
 }
 
 // Takes in sea lion id, searches features with that id. Fills passed in element with features string
@@ -280,8 +289,8 @@ function getFeaturesForEdit(id, div)
     {           
         // Go through each feature and create desciption element
         querySnapshot.forEach(function(doc) 
-        {        
-            featureCount++;               
+        {  
+            featureIds.push(doc.id);
             var featureElement = document.createElement("input");
             featureElement.setAttribute("type", "text");
             featureElement.id = doc.id;
@@ -318,11 +327,52 @@ function isChecked(name, index)
     return checked;
 }
 
-function update()
+function updateFeatues()
 {
-    var sealionRef = db.collection("Sea Lions").doc(currentSealionKey);
+    if (newFeature)
+    {
+        addFeaturesForEdit(currentSealionKey);
+    }
+
+
+    for (let i = 0; i < featureIds.length; i++)
+    {
+        console.log(featureIds[i]);
+        var featureRef = db.collection("Feature").doc(featureIds[i]);
+
+        featureRef.update
+        (
+            {
+                description : document.getElementById(featureIds[i]).value
+            }
+            
+        )
+        .then(function() {
+            console.log("Document successfully updated!");
+            if (i == featureIds.length-1)
+            {
+                location.reload();
+            }
+            
+        })
+        .catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+
+    });
+
+    }
 
     
+
+}
+
+
+
+
+function updateSealion()
+{
+    var sealionRef = db.collection("Sea Lions").doc(currentSealionKey);    
 
     var sealionUpdatedData = 
     {        
@@ -349,7 +399,7 @@ function update()
 		right2: isChecked("right", 1),
 		right3: isChecked("right", 2),
 		right4: isChecked("right", 3),
-		right5: isChecked("right", 4),        
+		right5: isChecked("right", 4),   
             
     };
 
@@ -360,16 +410,68 @@ function update()
     )
     .then(function() {
         console.log("Document successfully updated!");
-        location.reload();
+    
     })
     .catch(function(error) {
         // The document probably doesn't exist.
         console.error("Error updating document: ", error);
 
     });
+}
 
+function addFeaturesForEdit(id)
+{    
+          
+    //Loop through all the features
+    for (var featuresIndex = 0; featuresIndex < featureCount;  featuresIndex++)
+    {            
+        var descriptionElement = "featuredescription"+featuresIndex;                     
+        feature_object = {description : document.getElementById(descriptionElement).value, images : 0, id : id};   
 
+        db.collection("Feature").add(feature_object).then(function(feature)
+        {
+            console.log("Document written with ID: ", feature.id);                
+            //uploadImageForEdit(feature.id);
 
+        }).catch(function(error) 
+        {
+            console.error("Error adding document: ", error);
+        });          
+    }
+       
+}
 
+//uploads images and stores them under sea lions unique id
+function uploadImageForEdit(id)
+{        
+    //Get the name of the array holding files
+    var filesarray = "files"+fileArrayIndex+"[]";
 
+    console.log(filesarray);
+    // Create a root reference
+    var files = document.getElementById(filesarray).files; // use the Blob or File API
+    console.log(files);
+    
+    //Only try and upload image if the files array has something in it
+    if (files.length > 0)
+    {  
+        console.log("file length: " + files.length);
+        //Update image length of data            
+
+        var featureRef = db.collection("Feature").doc(id);            
+        featureRef.update({
+            images: files.length
+        });
+
+        //Loop through each image in files and add to firebase storage
+        for (var imageIndex = 0; imageIndex < files.length; imageIndex++)
+        {
+            var storageRef = firebase.storage().ref(id + "/image" + imageIndex); 
+            var task = storageRef.put(files[imageIndex]);
+
+            //Add error handling - See firebase docs
+        }
+    }     
+    fileArrayIndex++;             
+       
 }

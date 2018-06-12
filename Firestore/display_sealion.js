@@ -243,15 +243,7 @@ function getFeatures(id, div)
     });
 }
 
-function getImage(id, index, element)
-{    
-    var imageRef = id+"/image"+index; 
-	
-    firebase.storage().ref().child(imageRef).getDownloadURL().then(function(url)
-    {        
-        element.src = url;        
-    });
-}
+
 function getImage(id, index, element)
 {    
     var imageRef = id+"/image"+index; 
