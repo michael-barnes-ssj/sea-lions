@@ -1,4 +1,5 @@
 var featureCount = 0;
+var fileindex = 0;
 var currentSealionKey;
 
 var featureIds = [];
@@ -222,7 +223,8 @@ function createUpdateCard(key)
     button.className = "button update";
     button.innerHTML = 'Submit';
     button.onclick = updateSealion;  
-    button.onclick = updateFeatues;  
+    button.onclick = updateFeatues; 
+     
     col2cell.appendChild(button); 
 
     // Add div to put new features in
@@ -295,7 +297,15 @@ function getFeaturesForEdit(id, div)
             featureElement.setAttribute("type", "text");
             featureElement.id = doc.id;
             featureElement.value = doc.data().description;
+
+            var deletecheckbox = document.createElement("INPUT");
+            deletecheckbox.setAttribute("type", "checkbox");
+            deletecheckbox.name = "delete_checkbox";
+            deletecheckbox.id = "delete"+doc.id;
+            
+
             div.appendChild(featureElement);
+            div.appendChild(deletecheckbox);
 
             // For each image the feature has, create element and fill it with image
             for (var i = 0; i < doc.data().images; i++)
@@ -337,7 +347,7 @@ function updateFeatues()
 
     for (let i = 0; i < featureIds.length; i++)
     {
-        console.log(featureIds[i]);
+        console.log("Test " +featureIds[i]);
         var featureRef = db.collection("Feature").doc(featureIds[i]);
 
         featureRef.update
@@ -349,9 +359,11 @@ function updateFeatues()
         )
         .then(function() {
             console.log("Document successfully updated!");
+            
             if (i == featureIds.length-1)
             {
-                location.reload();
+                deleteFeatures();
+            //     location.reload();
             }
             
         })
@@ -359,9 +371,13 @@ function updateFeatues()
             // The document probably doesn't exist.
             console.error("Error updating document: ", error);
 
-    });
+        });
 
     }
+
+    
+
+    
 
     
 
@@ -431,7 +447,7 @@ function addFeaturesForEdit(id)
         db.collection("Feature").add(feature_object).then(function(feature)
         {
             console.log("Document written with ID: ", feature.id);                
-            //uploadImageForEdit(feature.id);
+            uploadImageForEdit(feature.id);
 
         }).catch(function(error) 
         {
@@ -445,7 +461,7 @@ function addFeaturesForEdit(id)
 function uploadImageForEdit(id)
 {        
     //Get the name of the array holding files
-    var filesarray = "files"+fileArrayIndex+"[]";
+    var filesarray = "files"+fileindex+"[]";
 
     console.log(filesarray);
     // Create a root reference
@@ -471,7 +487,114 @@ function uploadImageForEdit(id)
 
             //Add error handling - See firebase docs
         }
-    }     
-    fileArrayIndex++;             
+    }  
+    fileindex++; 
+                
        
 }
+
+
+
+function deleteFeatures()
+{    
+    checkboxes = document.getElementsByName("delete_checkbox");    
+    
+    for (let i = 0; i < checkboxes.length; i++)
+    {
+        if (checkboxes[i].checked)
+        {             
+            id = checkboxes[i].id.substring(6);
+            
+            ref = db.collection("Feature").doc(id);
+
+            ref.delete().then(function()
+            {                
+                console.log("Document deleted");                
+            }).catch(function(error) 
+            {
+                console.error("Error adding document: ", error);
+            });
+
+            deleteImage(id);
+
+            // ref.get().then(function(feature)
+            // {
+                
+            //     
+                
+                
+                
+
+            // });              
+        }
+    }
+
+    
+}
+
+function deleteImage(id)
+{
+
+    let promises = []
+    let hasImages = true;
+    let i = 0;
+    
+    while (hasImages)
+    {
+        
+        path = id+"/"+"image"+i;
+        
+        let storageRef = firebase.storage().ref(path); 
+        console.log(path);
+        promises.push
+        (
+            storageRef.delete().then(function()
+            {
+            // File deleted successfully
+                i++;
+                console.log(id+ " deleted");
+            }).catch(function(error) {
+                hasImages = false;
+                console.log(error);
+            })
+            
+        );
+        Promise.all(promises);
+    }
+
+    
+
+             
+}
+
+
+
+
+// function deleteFeatures()
+// {    
+//     checkboxes = document.getElementsByName("delete_checkbox");    
+    
+//     //let promises  = [];
+
+//     for (let i = 0; i < checkboxes.length; i++)
+//     {
+//         if (checkboxes[i].checked)
+//         {             
+//             id = checkboxes[i].id.substring(6);
+//             //deleteImage(id);
+
+//             ref = db.collection("Feature").doc(id);
+
+//             //promises.push(
+//                 ref.delete().then(function()
+//             {                
+//                 console.log("Document deleted");                
+//             }).catch(function(error) 
+//             {
+//                 console.error("Error adding document: ", error);
+//             });//);    
+//         }
+//     }
+
+//     //Promise.all(promises);
+// }
