@@ -79,6 +79,8 @@ function createCard(key)
 { 
     // use sea lion id to get sea lion from map
     var sealion = sealionsMap.get(key);
+    
+
     var containerDiv = document.createElement
     //Get ref to display div and create elements
     var displayDiv = document.getElementById("displaySealions");
@@ -98,7 +100,7 @@ function createCard(key)
     col1cell.className = "large-3 medium-3 cell";
     col2cell.className = "large-3 medium-3 cell";
     col3cell.className = "large-3 medium-3 cell"; 
-    col4cell.className = "large-3 medium-3 cell";   
+    col4cell.className = "large-3 medium-3 cell col4";   
 
     grid.appendChild(col1cell);
     grid.appendChild(col2cell);
@@ -173,29 +175,33 @@ function createCard(key)
             //Column 3
             col3cell.appendChild(fieldElement);
         }
-    }      	
-    
+    }  
+    	
+    var button_div = document.createElement("div");
+    button_div.className = "button_div";
+    grid.appendChild(button_div);
+
     //Gets all the features associated with sea lion. Updates inner html of element
     getFeatures(key, col4cell);
     
     var button = document.createElement('button');
-    button.className = "button update";
+    button.className = "button  submit_update";
     button.innerHTML = 'Update';
     button.onclick = function()
     {
        // In update sealion.js 
        createUpdateCard(key);
     };
-    col2cell.appendChild(button);    
+    button_div.appendChild(button);    
 
     var button = document.createElement('button');
-     button.className = "button";
+     button.className = "button delete";
     button.innerHTML = 'Delete';
     button.onclick = function()
     {
         deleteSealion(key);
     };
-    col2cell.appendChild(button);  
+    button_div.appendChild(button);  
 }
 
 function deleteSealion(key)
