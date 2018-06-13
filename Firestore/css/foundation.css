@@ -5857,6 +5857,12 @@ a.thumbnail {
   background: #999;
   color: #ffffff;
 }
+.toe-check{
+  display: none;
+}
+.toe-label.update{
+  margin-right: 5%;
+}
 
 #title{
   font-weight: bold;

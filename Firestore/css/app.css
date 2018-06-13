@@ -114,23 +114,30 @@ body{
 	margin-bottom: 0px;
 }
 
-.col4 {
+.four {
     position:relative;
 }
 .button.delete {
-	float: right;
-	margin-bottom: 0px;
-	width: 20%;
-	margin-right: 3rem;
 	background-color: red;
-}
-.button.submit_update{
-	float: left;
-	width: 23%;
-	margin-bottom: 0px;
-	margin-left: 1rem;
+	position: absolute;
+	bottom: -7%;
 }
 
+.one{
+    position: relative;
+}
+.button.submit_update{
+	position: absolute;
+	bottom: -7%;
+	width: 100%;
+}
+
+.button.update{
+	width: 100%;
+}
+.pob{
+	margin-bottom: 200px;
+}
 .display-all.tbl_head{
 	width: 64%;
 }
@@ -142,4 +149,8 @@ body{
 
 .button.feature{
 	width: 100%;
+}
+
+.right-clipped{
+	margin-top: 5%;
 }

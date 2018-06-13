@@ -97,10 +97,12 @@ function createCard(key)
     var col2cell = document.createElement("div");
     var col3cell = document.createElement("div");
     var col4cell = document.createElement("div");
-    col1cell.className = "large-3 medium-3 cell";
+    col1cell.className = "large-3 medium-3 cell one";
+    col1cell.id = "one"
     col2cell.className = "large-3 medium-3 cell";
     col3cell.className = "large-3 medium-3 cell"; 
-    col4cell.className = "large-3 medium-3 cell col4";   
+    col4cell.className = "large-3 medium-3 cell four";
+    col4cell.id = "four"   
 
     grid.appendChild(col1cell);
     grid.appendChild(col2cell);
@@ -116,6 +118,7 @@ function createCard(key)
     var dob = document.createElement("p");
     var mother = document.createElement("p");
     var pob = document.createElement("p");
+    pob.className = "pob";
     //Fill with field data
     name.innerHTML = cap("Name") + ": " + sealion["name"];
     gender.innerHTML = cap("Gender") + ": " + sealion["gender"];  
@@ -185,14 +188,14 @@ function createCard(key)
     getFeatures(key, col4cell);
     
     var button = document.createElement('button');
-    button.className = "button  submit_update";
+    button.className = "button submit_update";
     button.innerHTML = 'Update';
     button.onclick = function()
     {
        // In update sealion.js 
        createUpdateCard(key);
     };
-    button_div.appendChild(button);    
+    col1cell.appendChild(button);    
 
     var button = document.createElement('button');
      button.className = "button delete";
@@ -201,7 +204,8 @@ function createCard(key)
     {
         deleteSealion(key);
     };
-    button_div.appendChild(button);  
+    // Need to fix so that this is appended after all the features are loaded into the modal. Will cause problems in the future with css when too many features are added.
+    col4cell.appendChild(button);  
 }
 
 function deleteSealion(key)
