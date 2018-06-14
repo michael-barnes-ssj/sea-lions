@@ -177,15 +177,16 @@ function createUpdateCard(key)
     {        
         if(sealion[leftkeys[i]] == true)
         {            
-            createCheckbox(leftkeys[i], "left", 1, true, col3cell );
+            createCheckbox(i+1, leftkeys[i], "left", 1, true, col3cell );
         }
         else if (sealion[leftkeys[i]] == false)
         {
-            createCheckbox(leftkeys[i], "left", 1, false, col3cell );
+            createCheckbox(i+1, leftkeys[i], "left", 1, false, col3cell );
         }
     }
 
     var rightClipped = document.createElement("p");
+    rightClipped.className = "right-clipped";
     rightClipped.innerHTML = "Right Clipped:";
     col3cell.appendChild(rightClipped);
 
@@ -195,11 +196,11 @@ function createUpdateCard(key)
         if(sealion[rightkeys[i]] == true)
         {
             
-            createCheckbox(rightkeys[i], "right", 1, true, col3cell );
+            createCheckbox(i+1, rightkeys[i], "right", 1, true, col3cell );
         }
         else if (sealion[rightkeys[i]] == false)
         {
-            createCheckbox(rightkeys[i], "right", 1, false, col3cell );
+            createCheckbox(i+1, rightkeys[i], "right", 1, false, col3cell );
         }
     }
 
@@ -213,7 +214,7 @@ function createUpdateCard(key)
 
     // Add feature button
     let addFeature = document.createElement("button");
-    addFeature.className = "button";
+    addFeature.className = "button feature";
     addFeature.innerHTML = 'Add Feature';
     addFeature.onclick = createFeaturesForEdit;    
     col4cell.appendChild(addFeature);
@@ -241,7 +242,7 @@ function createUpdateCard(key)
 }
 
 
-function createCheckbox(id, name, value, checked, cell)
+function createCheckbox(num, id, name, value, checked, cell)
 {   
     var checkbox = document.createElement("INPUT");
     checkbox.setAttribute("type", "checkbox");
@@ -250,9 +251,10 @@ function createCheckbox(id, name, value, checked, cell)
 
     checkbox.value = value;
     checkbox.checked = checked;
+    checkbox.className = "toe-check";
 
     let label = document.createElement('label');
-    label.className = "toe-label";
+    label.className = "toe-label update";
     label.setAttribute("for", id);
     
     cell.appendChild(checkbox);

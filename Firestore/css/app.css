@@ -1,78 +1,76 @@
-body{
+body
+{
 	background-color: #E8EAED;
 }
-.sticky-topbar {
-	width: 100%;
-}
-.top-bar{
-	height: 100px;
-	padding: 0;
-}
-.nav-title{
-	float: left;
-	margin: 10px;
-	color: white;
-}
-.nav-button{
-	float: left;
-	display: inline;
-	padding: 4.7%;
-	height: 100%;
-	font-size: 20px;
-}
-.nav-button:hover{
-	background-color: #DCDEE0;
-}
-.large-4.medium-4.small-4.cell.nav{
+
+.large-4.medium-4.small-4.cell.nav
+{
 	background-color: #373E47;
 }
-.search-nav{
+
+.search-nav
+{
 	width: 40%;
 	float: right;
 	margin: 10px;
 	margin-top: 23px;
 }
-.button.nav{
+
+.button.nav
+{
 	width: 25%;
 	float: right;
 	margin: 10px;
 	margin-top: 23px;
 }
-.large-12.cell.page-header{
+
+.large-12.cell.page-header
+{
 	height: 120px;
 }
-.page-title{
+
+.page-title
+{
 	text-align: center;
 	padding-top: 1.5%;
 }
-.callout{
+
+.callout
+{
 	padding: 30px;
 	margin: 80px;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
-.button.search{
+.button.search
+{
 	float: right;
 	width: 40%;
 }
-.large-12.cell.footer{
+
+.large-12.cell.footer
+{
 	position:absolute;
     bottom:0;
 	height: 40px;
 	background-color: #373E47;
 }
-.display-all{
+
+.display-all
+{
 	margin:0 auto;
 }
 
-.form-container{
+.form-container
+{
 	padding: 20px;
 }
 
 
 
 /* The Modal (background) */
-.modal {
+.modal
+{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -86,7 +84,8 @@ body{
 }
 
 /* Modal Content/Box */
-.modal-content {
+.modal-content
+{
     background-color: white;
     margin: 15% auto; /* 15% from the top and centered */
     border: 1px solid #888;
@@ -94,7 +93,8 @@ body{
 }
 
 /* The Close Button */
-.close {
+.close
+{
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -102,44 +102,237 @@ body{
 }
 
 .close:hover,
-.close:focus {
+.close:focus
+{
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
-#displaySealions{
+#displaySealions
+{
 	padding:0px;
 }
-.card{
+.card
+{
 	margin-bottom: 0px;
 }
 
-.col4 {
+.four
+{
     position:relative;
 }
-.button.delete {
-	float: right;
-	margin-bottom: 0px;
-	width: 20%;
-	margin-right: 3rem;
+.button.delete
+{
 	background-color: red;
-}
-.button.submit_update{
-	float: left;
-	width: 23%;
-	margin-bottom: 0px;
-	margin-left: 1rem;
+	position: absolute;
+	bottom: -7%;
+	width: 80%;
 }
 
-.display-all.tbl_head{
+.one
+{
+    position: relative;
+}
+
+.button.submit_update
+{
+	position: absolute;
+	bottom: -7%;
+	width: 80%;
+}
+
+.button.update
+{
+	width: 100%;
+}
+
+.pob
+{
+	margin-bottom: 200px;
+}
+
+.display-all.tbl_head
+{
 	width: 64%;
 }
 
-.button_div{
+.button_div
+{
 	width: 100%;
 	padding-top: 10px;
 }
 
-.button.feature{
+.button.feature
+{
 	width: 100%;
+}
+
+.right-clipped
+{
+	margin-top: 5%;
+}
+
+
+
+.select-size  input
+{
+	display: none;
+}
+
+.toe-label,
+.admin-label
+{
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	border: 1px solid #B5AEAE;
+	line-height: 50px;
+	cursor: pointer;
+	margin-bottom: 2%;
+}
+
+.admin-label
+{
+	display: inline-block;
+	width: 70px;
+	height: 50px;
+	margin-bottom: 2%;
+	margin-top: 0.5%;
+	padding: 0;
+}
+
+#left1:checked ~ .toe-label[for="left1"],
+#left2:checked ~ .toe-label[for="left2"],
+#left3:checked ~ .toe-label[for="left3"],
+#left4:checked ~ .toe-label[for="left4"],
+#left5:checked ~ .toe-label[for="left5"],
+#right1:checked ~ .toe-label[for="right1"],
+#right2:checked ~ .toe-label[for="right2"],
+#right3:checked ~ .toe-label[for="right3"],
+#right4:checked ~ .toe-label[for="right4"],
+#right5:checked ~ .toe-label[for="right5"],
+#read:checked ~ .admin-label[for="read"],
+#write:checked ~ .admin-label[for="write"],
+#update:checked ~ .admin-label[for="update"],
+#delete:checked ~ .admin-label[for="delete"]
+{
+	background: #999;
+	color: #ffffff;
+}
+.toe-check
+{
+	display: none;
+}
+.toe-label.update
+{
+	margin-right: 2%;
+}
+
+#title
+{
+	font-weight: bold;
+}
+
+.card
+{
+	padding: 20px;
+}
+
+.hover-underline-menu
+{
+	width: 100%;
+}
+
+.hover-underline-menu .menu
+{
+	background-color: #2C3840;
+}
+
+.hover-underline-menu .menu a
+{
+	color: #fefefe;
+	padding: 1.2rem 1.5rem;
+}
+
+.hover-underline-menu .menu .underline-from-center
+{
+	position: relative;
+}
+
+.hover-underline-menu .menu .underline-from-center::after
+{
+	content: "";
+	position: absolute;
+	top: calc(100% - 0.125rem);
+	border-bottom: 0.125rem solid #fefefe;
+	left: 50%;
+	right: 50%;
+	transition: all 0.5s ease;
+}
+
+.hover-underline-menu .menu .underline-from-center:hover::after
+{
+	left: 0;
+	right: 0;
+	transition: all 0.5s ease;
+}
+
+.page-title
+{
+	text-align: center;
+}
+
+.title
+{
+	color: white;
+	padding-top: 10px;
+	margin-bottom: -10px;
+	font-weight: bold;
+}
+
+.search-nav.searchbar
+{
+	width: 200px;
+	margin-top: 15px;
+	margin-right: 20px;
+	height: 35px;
+}
+
+.button.nav.searchbtn
+{
+	margin-top: 15px;
+	height: 35px;
+	padding-top: 9px;
+	width: 15%;
+}
+
+#ptitle{
+	font-weight: bold;
+	position: relative;
+	margin: 0 0 1rem 0;
+	padding: 0; 
+	border-radius: 0;
+	margin: 0 80px 0 80px;
+}
+
+
+.button.colwide
+{
+	width: 100%;
+}
+
+.button.thirdcol
+{
+	width: 90%;
+}
+
+.button.add_third_col
+{
+	width: 29%;
+}
+
+.button.adduser
+{
+	width: 293px;
 }
