@@ -22,9 +22,9 @@
     <nav class="hover-underline-menu" data-menu-underline-from-center>
             <h1 class="menu title align-center">NZSLT Database</h1>
             <ul class="menu align-center">
-                <li><a href="search_sealion.html">Search Sealion</a></li>
-                <li><a href="add_sealion.html">Add a Sea Lion</a></li>
-                <li><a href="#">Display All</a></li>
+                <li><a href="search_sealion - Copy.html">Search</a></li>
+                <li><a href="add_sealion - Copy.html">Add Sea Lion</a></li>
+                <li><a href="display_all_sea_lion.html">Display All</a></li>
             </ul>
         </nav>   
         <div class="grid-container">
@@ -44,14 +44,19 @@
 
                                         <label for="password">Password: </label>
                                         <input id="password" type="password" name="password">
-										
-										<input type="checkbox" id="read" value="read"> Read <br>
-										<input type="checkbox" id="write" value="write"> Write <br>
-										<input type="checkbox" id="update" value="update"> Update <br>
-										<input type="checkbox" id="delete" value="delete" > Delete <br>
+										<div class="select-size">
+                                            <input type="checkbox" id="read" value="read">
+                                            <input type="checkbox" id="write" value="write">
+                                            <input type="checkbox" id="update" value="update">
+                                            <input type="checkbox" id="delete" value="delete" >
 
-                                        <input type="button" value="Add User" onclick="addUser()" class="button add">
-										
+                                            <label class="admin-label" for="read">Read</label>
+                                            <label class="admin-label" for="write">Write</label>
+                                            <label class="admin-label" for="update">Update</label>
+                                            <label class="admin-label" for="delete">Delete</label>
+										</div>
+
+                                        <input type="button" value="Add User" onclick="addUser()" class="button adduser">
 										
 
                                     </fieldset>
