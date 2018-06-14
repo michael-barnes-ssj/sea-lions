@@ -141,8 +141,8 @@ function createCard(key)
     //desc.innerHTML = cap("Transponder #") + sealion.data()["desc"];  
     tag_number.innerHTML = cap("Tag Number") + ": " + sealion["tag_number"];  
     rf_number.innerHTML = cap("RFID Number") + ": " + sealion["rf_number"];
-    left_out.innerHTML = cap("Left Tag Out") + ": " + sealion["left_tag_date_out"];  
-    right_out.innerHTML = cap("Right Tag Out") + ": " + sealion["right_tag_date_out"];
+    left_out.innerHTML = cap("Left Tag Out") + ": " + sealion["left_tag_out"];  
+    right_out.innerHTML = cap("Right Tag Out") + ": " + sealion["right_tag_out"];
     
     //Append to appropriate column div
     //Column 1
