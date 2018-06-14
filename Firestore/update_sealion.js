@@ -1,4 +1,5 @@
 var featureCount = 0;
+var fileindex = 0;
 var currentSealionKey;
 
 var featureIds = [];
@@ -222,14 +223,22 @@ function createUpdateCard(key)
     let button = document.createElement('button');
     button.className = "button update";
     button.innerHTML = 'Submit';
-    button.onclick = updateSealion;  
-    button.onclick = updateFeatues;  
-    col1cell.appendChild(button); 
+    button.onclick = update;
+    col2cell.appendChild(button); 
+
+    //create button
+    
 
     // Add div to put new features in
     let featureDiv = document.createElement("div");
     featureDiv.id = "features";
     col4cell.appendChild(featureDiv);   
+
+    let deleteFeaturesButton = document.createElement('button');
+    deleteFeaturesButton.className = "button";
+    deleteFeaturesButton.innerHTML = 'Delete Features';
+    deleteFeaturesButton.onclick = deleteFeatures;
+    featureDiv.appendChild(deleteFeaturesButton); 
 }
 
 
@@ -247,10 +256,6 @@ function createCheckbox(num, id, name, value, checked, cell)
     let label = document.createElement('label');
     label.className = "toe-label update";
     label.setAttribute("for", id);
-    label.innerHTML = num
-
-
-
     
     cell.appendChild(checkbox);
     cell.appendChild(label);
@@ -298,7 +303,14 @@ function getFeaturesForEdit(id, div)
             featureElement.setAttribute("type", "text");
             featureElement.id = doc.id;
             featureElement.value = doc.data().description;
+
+            var deletecheckbox = document.createElement("INPUT");
+            deletecheckbox.setAttribute("type", "checkbox");
+            deletecheckbox.name = "delete_checkbox";
+            deletecheckbox.id = "delete"+doc.id;            
+
             div.appendChild(featureElement);
+            div.appendChild(deletecheckbox);
 
             // For each image the feature has, create element and fill it with image
             for (var i = 0; i < doc.data().images; i++)
@@ -330,151 +342,243 @@ function isChecked(name, index)
     return checked;
 }
 
-function updateFeatues()
+
+
+function update()
 {
+    promises = [];
+    promises.push(updateSealion());  
+    promises = promises.concat(updateFeatures());
+
     if (newFeature)
     {
-        addFeaturesForEdit(currentSealionKey);
+        promises = promises.concat(addNewFeatures());
     }
 
-
-    for (let i = 0; i < featureIds.length; i++)
+    Promise.all(promises).then(function()
     {
-        console.log(featureIds[i]);
-        var featureRef = db.collection("Feature").doc(featureIds[i]);
+        console.log("finished");
+        location.reload();
+    });
 
-        featureRef.update
+}
+
+function updateSealion()
+{    
+    return new Promise(function (resolve, reject) {
+        var sealionRef = db.collection("Sea Lions").doc(currentSealionKey);    
+
+        var sealionUpdatedData = 
+        {        
+            name: document.getElementById("name").value,
+            transponder: document.getElementById("transponder").value,   
+            mother: document.getElementById("mother").value,
+            dob: document.getElementById("dob").value,
+            pob:  document.getElementById("pob").value,
+            gender: document.getElementById("gender").value,        
+            living_status: document.getElementById("living_status").value,   
+            tag_date_in: document.getElementById("tag_date_in").value,
+            left_tag_date_out: document.getElementById("left_tag_date_out").value,
+            right_tag_date_out: document.getElementById("right_tag_date_out").value,
+            type: document.getElementById("tagtype").value,
+            colour: document.getElementById("tagcolour").value,		
+            tag_number: document.getElementById("tag_number").value,
+            rf_number: document.getElementById("rf_number").value,		
+            left1: isChecked("left", 0),
+            left2: isChecked("left", 1),
+            left3: isChecked("left", 2),
+            left4: isChecked("left", 3),
+            left5: isChecked("left", 4),
+            right1: isChecked("right", 0),
+            right2: isChecked("right", 1),
+            right3: isChecked("right", 2),
+            right4: isChecked("right", 3),
+            right5: isChecked("right", 4),   
+                
+        };
+        
+        return sealionRef.update
         (
-            {
-                description : document.getElementById(featureIds[i]).value
-            }
-            
+            sealionUpdatedData
         )
-        .then(function() {
-            console.log("Document successfully updated!");
-            if (i == featureIds.length-1)
-            {
-                location.reload();
-            }
-            
+        .then(function() 
+        {     
+           
+            console.log("Document successfully updated!");   
+            return resolve();    
         })
         .catch(function(error) {
             // The document probably doesn't exist.
             console.error("Error updating document: ", error);
+            return reject();
 
-    });
-
-    }
-
-    
-
+        });
+     });
 }
 
+function updateFeatures()
+{ 
+    promises = [];
+    for (let i = 0; i < featureIds.length; i++)
+    {
+        console.log("Test " +featureIds[i]);
+        var featureRef = db.collection("Feature").doc(featureIds[i]);
 
-
-
-function updateSealion()
-{
-    var sealionRef = db.collection("Sea Lions").doc(currentSealionKey);    
-
-    var sealionUpdatedData = 
-    {        
-        name: document.getElementById("name").value,
-        transponder: document.getElementById("transponder").value,   
-        mother: document.getElementById("mother").value,
-        dob: document.getElementById("dob").value,
-        pob:  document.getElementById("pob").value,
-        gender: document.getElementById("gender").value,        
-        living_status: document.getElementById("living_status").value,   
-		tag_date_in: document.getElementById("tag_date_in").value,
-        left_tag_date_out: document.getElementById("left_tag_date_out").value,
-        right_tag_date_out: document.getElementById("right_tag_date_out").value,
-		type: document.getElementById("tagtype").value,
-        colour: document.getElementById("tagcolour").value,		
-		tag_number: document.getElementById("tag_number").value,
-		rf_number: document.getElementById("rf_number").value,		
-		left1: isChecked("left", 0),
-		left2: isChecked("left", 1),
-		left3: isChecked("left", 2),
-		left4: isChecked("left", 3),
-		left5: isChecked("left", 4),
-		right1: isChecked("right", 0),
-		right2: isChecked("right", 1),
-		right3: isChecked("right", 2),
-		right4: isChecked("right", 3),
-		right5: isChecked("right", 4),   
+        promises.push(featureRef.update({ description : document.getElementById(featureIds[i]).value}).then(function() 
+        {
+            console.log("Document successfully updated!");  
+        })
+        .catch(function(error) {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
             
-    };
 
-    // Set the "capital" field of the city 'DC'
-    return sealionRef.update
-    (
-        sealionUpdatedData
-    )
-    .then(function() {
-        console.log("Document successfully updated!");
+        }));
+    }   
+    return promises;
     
-    })
-    .catch(function(error) {
-        // The document probably doesn't exist.
-        console.error("Error updating document: ", error);
-
-    });
 }
 
-function addFeaturesForEdit(id)
-{    
-          
+function addNewFeatures()
+{  
+    promises = [];
+    id = currentSealionKey;
+
     //Loop through all the features
     for (var featuresIndex = 0; featuresIndex < featureCount;  featuresIndex++)
-    {            
-        var descriptionElement = "featuredescription"+featuresIndex;                     
-        feature_object = {description : document.getElementById(descriptionElement).value, images : 0, id : id};   
-
-        db.collection("Feature").add(feature_object).then(function(feature)
-        {
-            console.log("Document written with ID: ", feature.id);                
-            //uploadImageForEdit(feature.id);
+    { 
+        var descriptionElement = "featuredescription"+featuresIndex;  
+        feature_object = {description : document.getElementById(descriptionElement).value, images : 0, id : id}; 
+        let ref = db.collection("Feature")
+        
+        promises.push(ref.add(feature_object).then(function(feature)
+        {                       
+            promises = promises.concat(uploadNewImages(feature.id));                      
 
         }).catch(function(error) 
         {
-            console.error("Error adding document: ", error);
-        });          
+            console.error("Error adding document: ", error);                
+        }));          
     }
-       
 }
 
 //uploads images and stores them under sea lions unique id
-function uploadImageForEdit(id)
-{        
+function uploadNewImages(id)
+{   
+    promises = []
     //Get the name of the array holding files
-    var filesarray = "files"+fileArrayIndex+"[]";
-
-    console.log(filesarray);
+    var filesarray = "files"+fileindex+"[]";    
     // Create a root reference
-    var files = document.getElementById(filesarray).files; // use the Blob or File API
-    console.log(files);
+    var files = document.getElementById(filesarray).files; // use the Blob or File API  
     
     //Only try and upload image if the files array has something in it
     if (files.length > 0)
-    {  
-        console.log("file length: " + files.length);
+    {          
         //Update image length of data            
 
         var featureRef = db.collection("Feature").doc(id);            
-        featureRef.update({
+        promises.push(featureRef.update(
+        {
             images: files.length
-        });
+        }));
 
         //Loop through each image in files and add to firebase storage
         for (var imageIndex = 0; imageIndex < files.length; imageIndex++)
         {
+            console.log(imageIndex);
             var storageRef = firebase.storage().ref(id + "/image" + imageIndex); 
-            var task = storageRef.put(files[imageIndex]);
-
-            //Add error handling - See firebase docs
+            promises.push(storageRef.put(files[imageIndex]));
         }
-    }     
-    fileArrayIndex++;             
-       
+    }  
+    fileindex++; 
+    return promises;
 }
+
+function deleteFeatures()
+{    
+    deleting = false;
+    checkboxes = document.getElementsByName("delete_checkbox");    
+    
+    for (let i = 0; i < checkboxes.length; i++)
+    {
+        if (checkboxes[i].checked)
+        {  
+            deleting = true;           
+
+            id = checkboxes[i].id.substring(6);
+            
+            ref = db.collection("Feature").doc(id);
+
+            ref.delete().then(function()
+            {                
+                console.log("Document deleted");                
+            }).catch(function(error) 
+            {
+                console.error("Error adding document: ", error);
+            });
+
+            deleteImage(id);                          
+        }
+    } 
+}
+
+async function deleteImage(id)
+{
+    let hasImages = true;
+    let i = 0;
+
+    while (hasImages == true)
+    { 
+        path = id+"/"+"image"+i;        
+        let storageRef = firebase.storage().ref(path); 
+               
+        await storageRef.delete().then(function()
+        {
+        // File deleted successfully                
+            console.log(id+ " deleted");
+
+        }).catch(function(error) { 
+            hasImages = false;
+        })
+
+        if (i == 100)
+        {
+            hasImages = false;
+        }
+        i++;
+    }
+
+    location.reload();
+}
+
+
+
+
+// function deleteFeatures()
+// {    
+//     checkboxes = document.getElementsByName("delete_checkbox");    
+    
+//     //let promises  = [];
+
+//     for (let i = 0; i < checkboxes.length; i++)
+//     {
+//         if (checkboxes[i].checked)
+//         {             
+//             id = checkboxes[i].id.substring(6);
+//             //deleteImage(id);
+
+//             ref = db.collection("Feature").doc(id);
+
+//             //promises.push(
+//                 ref.delete().then(function()
+//             {                
+//                 console.log("Document deleted");                
+//             }).catch(function(error) 
+//             {
+//                 console.error("Error adding document: ", error);
+//             });//);    
+//         }
+//     }
+
+//     //Promise.all(promises);
+// }
