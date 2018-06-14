@@ -1,6 +1,6 @@
 // FirebaseUI config.
 var uiConfig = {
-    signInSuccessUrl: '/add_sealion.html',
+    signInSuccessUrl: '/display_all_sea_lion.html',
     signInOptions: [
         // Leave the lines as is for the providers you want to offer your users.          
         firebase.auth.EmailAuthProvider.PROVIDER_ID

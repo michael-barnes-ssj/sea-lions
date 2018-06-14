@@ -43,8 +43,7 @@ function addUserPermissions(userID)
     read: read,
     write: write,
     update: update,
-	delete: del,
-    admin: false
+	delete: del
 })
 .then(function() {
     console.log("Document successfully written!");
@@ -83,5 +82,6 @@ function sendPasswordReset()
       });
       // [END sendpasswordemail];
 }
+
 
 

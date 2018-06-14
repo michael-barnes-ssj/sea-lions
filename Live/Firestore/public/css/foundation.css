@@ -2510,20 +2510,6 @@ ul.no-bullet, ol.no-bullet {
   .button:hover, .button:focus {
     background-color: #14679e;
     color: #fefefe; }
-  .button.add{
-    width: 368px;
-  }
-.button.search
-{
-  width: 268px;
-}
-  .button.update{
-    width: 450px;
-    margin-top: 15px;
-  }
-  .button.feature{
-    width: 121px;
-  }
   .button.tiny {
     font-size: 0.6rem; }
   .button.small {
@@ -3339,7 +3325,7 @@ select {
 .callout {
   position: relative;
   margin: 0 0 1rem 0;
-  padding: 1rem;
+  padding: 0; 
   border: 1px solid rgba(10, 10, 10, 0.25);
   border-radius: 0;
   background-color: white;
@@ -5822,113 +5808,3 @@ a.thumbnail {
 
 .long-delay {
   animation-delay: 700ms !important; }
-#logo{
-  padding-top:10px;
-  margin-right:20px;
-}
-
-.select-size  input{
-  display: none;
-}
-
-.toe-label {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  text-align: center;
-  border: 1px solid #ddd;
-  line-height: 50px;
-  cursor: pointer;
-}
-
-#leftone:checked ~ .toe-label[for="leftone"],
-#lefttwo:checked ~ .toe-label[for="lefttwo"],
-#leftthree:checked ~ .toe-label[for="leftthree"],
-#leftfour:checked ~ .toe-label[for="leftfour"],
-#leftfive:checked ~ .toe-label[for="leftfive"],
-#rightone:checked ~ .toe-label[for="rightone"],
-#righttwo:checked ~ .toe-label[for="righttwo"],
-#rightthree:checked ~ .toe-label[for="rightthree"],
-#rightfour:checked ~ .toe-label[for="rightfour"],
-#rightfive:checked ~ .toe-label[for="rightfive"]
-{
-  background: #999;
-  color: #ffffff;
-}
-
-#title{
-  font-weight: bold;
-}
-
-.sealionDiv{
-  border: 1px solid;
-  margin-bottom: 20px;
-  padding: 10px;
-}
-
-.card{
-  padding: 20px;
-  border: 1px black solid;
-  margin-bottom: 30px;
-}
-
-.hover-underline-menu {
-  width: 100%;
-}
-
-.hover-underline-menu .menu {
-  background-color: #2C3840;
-}
-
-.hover-underline-menu .menu a {
-  color: #fefefe;
-  padding: 1.2rem 1.5rem;
-}
-
-.hover-underline-menu .menu .underline-from-center {
-  position: relative;
-}
-
-.hover-underline-menu .menu .underline-from-center::after {
-  content: "";
-  position: absolute;
-  top: calc(100% - 0.125rem);
-  border-bottom: 0.125rem solid #fefefe;
-  left: 50%;
-  right: 50%;
-  transition: all 0.5s ease;
-}
-
-.hover-underline-menu .menu .underline-from-center:hover::after {
-  left: 0;
-  right: 0;
-  transition: all 0.5s ease;
-}
-
-.page-title
-{
-  text-align: center;
-}
-
-.title
-{
-  color: white;
-  padding-top: 10px;
-  margin-bottom: -10px;
-  font-weight: bold;
-}
-
-.search-nav.searchbar
-{
-  width: 200px;
-  margin-top: 15px;
-  margin-right: 20px;
-  height: 35px;
-}
-
-.button.nav.searchbtn
-{
-  margin-top: 15px;
-  height: 35px;
-  padding-top: 9px;
-}
