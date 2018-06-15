@@ -420,7 +420,7 @@ function update()
     Promise.all(promises).then(function()
     {
         console.log("finished");
-        //location.reload();
+        modal.style.display = "none"; 
     });
 
 }
@@ -514,7 +514,7 @@ function addNewFeatures()
         let ref = db.collection("Feature")
         
         promises.push(ref.add(feature_object).then(function(feature)
-        {                       
+        {                                  
             promises = promises.concat(uploadNewImages(feature.id));                      
 
         }).catch(function(error) 
@@ -522,6 +522,7 @@ function addNewFeatures()
             console.error("Error adding document: ", error);                
         }));          
     }
+    return promises;
 }
 
 //uploads images and stores them under sea lions unique id
@@ -549,7 +550,10 @@ function uploadNewImages(id)
         {
             console.log(imageIndex);
             var storageRef = firebase.storage().ref(id + "/image" + imageIndex); 
-            promises.push(storageRef.put(files[imageIndex]));
+            promises.push(storageRef.put(files[imageIndex]).then(function()
+            {
+                console.log("image_added");
+            }));
         }
     }  
     fileindex++; 

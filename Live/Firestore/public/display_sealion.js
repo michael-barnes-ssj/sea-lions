@@ -1,6 +1,7 @@
 var featureMax = 0;
 var imageSrc = "";
 var rowLength;
+var modal;
 
 
 var sealionsMap = new Map;
@@ -269,7 +270,7 @@ function openModal(id)
     //Get sea lion id by getting id of parent of click - same as sealion
     sealionID = id.target.parentElement.id;
 	// Get the modal
-    var modal = document.getElementById('myModal');  
+    modal = document.getElementById('myModal');  
     
     modal.style.display = "block";
     createCard(sealionID);
@@ -284,6 +285,8 @@ function openModal(id)
     }
 
 }
+
+
 
 
 
