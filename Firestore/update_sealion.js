@@ -159,8 +159,70 @@ function createUpdateCard(key)
     createSelectDom("tagcolour", "Tag Colour:", sealion, col2cell);  
     createDom("tag_number", "text", "Tag Number:", sealion, col2cell);
     createDom("rf_number", "text", "Tag Number:", sealion, col2cell);
-    createDom("left_tag_date_out", "date", "Left Out:", sealion, col2cell);
-    createDom("right_tag_date_out", "date", "Right Out:", sealion, col2cell);  
+
+    //Create living status
+    var leftTag = document.createElement("select");
+    var leftTagLabel = document.createElement("label");
+    var leftTagText = document.createTextNode("Left Out: ")
+    leftTag.name = "left_tag_out";
+    leftTag.id = "left_tag_out";
+    leftTagLabel.setAttribute("for", "left_tag_out");
+    leftTagLabel.appendChild(leftTagText);
+
+    let leftTagOption = document.createElement("option");
+    leftTagOption.value = sealion["left_tag_out"]; 
+    leftTagOption.text = sealion["left_tag_out"];
+    leftTag.appendChild(leftTagOption);
+    
+	var statusarray = ["true","false"];
+
+    //Create and append the options
+    for (var i = 0; i < statusarray.length; i++) 
+    {
+        var option = document.createElement("option");
+        option.value = statusarray[i];
+        option.text = statusarray[i];
+        leftTag.appendChild(option);
+    } 
+
+    col2cell.appendChild(leftTagLabel);  
+    col2cell.appendChild(leftTag);
+
+    //Create living status
+    var rightTag = document.createElement("select");
+    var rightTagLabel = document.createElement("label");
+    var rightTagText = document.createTextNode("Right Out: ")
+    rightTag.name = "right_tag_out";
+    rightTag.id = "right_tag_out";
+    rightTagLabel.setAttribute("for", "right_tag_out");
+    rightTagLabel.appendChild(rightTagText);
+
+    let rightTagOption = document.createElement("option");
+    rightTagOption.value = sealion["right_tag_out"]; 
+    rightTagOption.text = sealion["right_tag_out"];
+    rightTag.appendChild(rightTagOption);
+    
+	var statusarray = ["true","false"];
+
+    //Create and append the options
+    for (var i = 0; i < statusarray.length; i++) 
+    {
+        var option = document.createElement("option");
+        option.value = statusarray[i];
+        option.text = statusarray[i];
+        rightTag.appendChild(option);
+    } 
+
+    col2cell.appendChild(rightTagLabel);  
+    col2cell.appendChild(rightTag);
+
+
+    //createSelectDom("left_tag_out", "Left Out:", sealion, col2cell);
+    //createSelectDom("right_tag_out", "Right Out:", sealion, col2cell);  
+
+
+
+
    
     var clipped_title = document.createElement("p");
     clipped_title.innerHTML = "Clipped toes:";

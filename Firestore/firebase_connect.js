@@ -1,11 +1,11 @@
 // Initialize Firebase
 var config = {
-    apiKey: "AIzaSyBSFk4CDdTukTOVHYte2ZG1kV2bjetNG-I",
-    authDomain: "sea-lions-otago.firebaseapp.com",
-    databaseURL: "https://sea-lions-otago.firebaseio.com",
-    projectId: "sea-lions-otago",
-    storageBucket: "sea-lions-otago.appspot.com",
-    messagingSenderId: "686540698265"
+apiKey: "AIzaSyAkWV947cIUsO-xfndo1UYgCQzhE5P2NhE",
+authDomain: "sea-lion-trust-database.firebaseapp.com",
+databaseURL: "https://sea-lion-trust-database.firebaseio.com",
+projectId: "sea-lion-trust-database",
+storageBucket: "sea-lion-trust-database.appspot.com",
+messagingSenderId: "554423923879"
 };
 
 firebase.initializeApp(config);
