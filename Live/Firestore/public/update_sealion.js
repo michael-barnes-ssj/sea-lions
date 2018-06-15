@@ -419,8 +419,7 @@ function update()
 
     Promise.all(promises).then(function()
     {
-        console.log("finished");
-        modal.style.display = "none"; 
+        location.reload();
     });
 
 }
@@ -515,14 +514,10 @@ function addNewFeatures()
         
         promises.push(ref.add(feature_object).then(function(feature)
         {                                  
-            promises = promises.concat(uploadNewImages(feature.id));                      
-
-        }).catch(function(error) 
-        {
-            console.error("Error adding document: ", error);                
+            return uploadNewImages(feature.id);  
         }));          
     }
-    return promises;
+    return Promise.all(promises);
 }
 
 //uploads images and stores them under sea lions unique id
@@ -557,7 +552,7 @@ function uploadNewImages(id)
         }
     }  
     fileindex++; 
-    return promises;
+    return Promise.all(promises);
 }
 
 function deleteFeatures()
