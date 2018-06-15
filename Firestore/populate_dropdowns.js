@@ -12,7 +12,6 @@ function getMothers()
     {  
 		document.forEach(function(values)
 		{			
-			console.log(values.data());
 			addOptionToDropDown(values.data().name, "mother");					
 		});
 	});

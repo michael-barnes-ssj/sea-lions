@@ -1,5 +1,5 @@
 // Index of form input id needs to align with the index on the sealion index field to correctly populate the map
-const formInputIds = ['name', 'mother', 'pob', 'gender', 'transponder', 'living_status', 'lefttagout', 'righttagout', 'tagcolour', 'tagtype', 'tagnumber', 'rfnumber', 'leftone', 'lefttwo', 'leftthree', 'leftfour', 'leftfive', 'rightone', 'righttwo', 'rightthree', 'rightfour', 'rightfive'];
+const formInputIds = ['name', 'mother', 'pob', 'gender', 'transponder', 'living_status', 'lefttagout', 'righttagout', 'tagcolour', 'tagtype', 'tagnumber', 'rfnumber', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
 const sealionIndexFields = ['name', 'mother', 'pob', 'gender', 'transponder', 'living_status', 'left_tag_out', 'right_tag_out', 'colour', 'type', 'tag_number', 'rf_number', 'left1', 'left2', 'left3', 'left4', 'left5', 'right1', 'right2', 'right3', 'right4', 'right5'];
 const formInputIdsExclCheckboxes = ['name', 'mother', 'pob', 'gender', 'transponder', 'living_status', 'lefttagout', 'righttagout', 'tagcolour', 'tagtype', 'tagnumber', 'rfnumber'];
 const featureSearchId = 'features';
@@ -18,7 +18,8 @@ async function searchExact() {
     var firebaseSearchResults = [];
     filters = await getFilterValues();
     results = await combineFeatureSearch(await getFirestoreMatches(filters));
-    displaySealions(results).then(alert("Search complete"));
+    displaySealions(results).then(()=>{
+        alert("Search complete\n" + results.length.toString() + " results found.")});
 }
 
 // Get sealions to display to webpage
