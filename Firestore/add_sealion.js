@@ -31,27 +31,29 @@ function createFeatures()
 }
 
 function addFeatures(id)
-{    
-    //Only add image if they have added a feature
-    if (featureCount > -1)
-    {        
-        //Loop through all the features
-        for (var featuresIndex = 0; featuresIndex <= featureCount;  featuresIndex++)
-        {            
-            var descriptionElement = "featuredescription"+featuresIndex;                     
-            feature_object = {description : document.getElementById(descriptionElement).value, images : 0, index : featuresIndex, id : id};   
+{   
+    return new Promise((resolve)=>{
+        //Only add image if they have added a feature
+        if (featureCount > -1)
+        {        
+            //Loop through all the features
+            for (var featuresIndex = 0; featuresIndex <= featureCount;  featuresIndex++)
+            {            
+                var descriptionElement = "featuredescription"+featuresIndex;                     
+                feature_object = {description : document.getElementById(descriptionElement).value, images : 0, index : featuresIndex, id : id};   
 
-            db.collection("Feature").add(feature_object).then(function(feature)
-            {
-                console.log("Document written with ID: ", feature.id);                
-                uploadImage(feature.id);
+                db.collection("Feature").add(feature_object).then(function(feature)
+                {
+                    console.log("Document written with ID: ", feature.id);                
+                    uploadImage(feature.id);
 
-            }).catch(function(error) 
-            {
-                console.error("Error adding document: ", error);
-            });          
+                }).catch(function(error) 
+                {
+                    console.error("Error adding document: ", error);
+                });          
+            }
         }
-    }    
+    });
 }
 
 //uploads images and stores them under sea lions unique id
@@ -154,7 +156,7 @@ function addSeaLion()
     db.collection("Sea Lions").add(sealion).then(function(sealion)
     {
         console.log("Document written with ID: ", sealion.id);
-        addFeatures(sealion.id);        
+        addFeatures(sealion.id).then(alert("Sealion added successfully"));        
 
     }).catch(function(error) 
     {
