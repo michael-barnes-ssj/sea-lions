@@ -110,6 +110,13 @@ function getClipped(elementName)
     return clipped;
 }
 
+function strToBoolOrEmpty(val) {
+    converted = '';
+    if (val === 'true') {converted = true}
+    else if (val === 'false') {converted = false}
+    return converted;
+}
+
 function addSeaLion()
 {	
 	left = getClipped("left[]");
@@ -125,8 +132,8 @@ function addSeaLion()
         transponder: checkIfEmpty(document.getElementById("transponder").value),   
         living_status: checkIfEmpty(document.getElementById("living_status").value),   
 		tag_date_in: checkIfEmpty(document.getElementById("tagdatein").value),
-        left_tag_out: checkIfEmpty(document.getElementById("lefttagout").value),
-        right_tag_out: checkIfEmpty(document.getElementById("righttagout").value),
+        left_tag_out: strToBoolOrEmpty(checkIfEmpty(document.getElementById("lefttagout").value)),
+        right_tag_out: strToBoolOrEmpty(checkIfEmpty(document.getElementById("righttagout").value)),
 		type: checkIfEmpty(document.getElementById("tagtype").value),
         colour: checkIfEmpty(document.getElementById("tagcolour").value),		
 		tag_number: checkIfEmpty(document.getElementById("tagnumber").value),
@@ -157,10 +164,10 @@ function addSeaLion()
 
 function checkIfEmpty(formdata)
 {
-    data = "-";
-    if (formdata != "")
-    {
-        data = formdata;
-    }
-    return data;
+    // data = "-";
+    // if (formdata != "")
+    // {
+    //     data = formdata;
+    // }
+    return formdata;
 }
