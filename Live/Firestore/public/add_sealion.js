@@ -31,27 +31,29 @@ function createFeatures()
 }
 
 function addFeatures(id)
-{    
-    //Only add image if they have added a feature
-    if (featureCount > -1)
-    {        
-        //Loop through all the features
-        for (var featuresIndex = 0; featuresIndex <= featureCount;  featuresIndex++)
-        {            
-            var descriptionElement = "featuredescription"+featuresIndex;                     
-            feature_object = {description : document.getElementById(descriptionElement).value, images : 0, index : featuresIndex, id : id};   
+{   
+    return new Promise((resolve)=>{
+        //Only add image if they have added a feature
+        if (featureCount > -1)
+        {        
+            //Loop through all the features
+            for (var featuresIndex = 0; featuresIndex <= featureCount;  featuresIndex++)
+            {            
+                var descriptionElement = "featuredescription"+featuresIndex;                     
+                feature_object = {description : document.getElementById(descriptionElement).value, images : 0, index : featuresIndex, id : id};   
 
-            db.collection("Feature").add(feature_object).then(function(feature)
-            {
-                console.log("Document written with ID: ", feature.id);                
-                uploadImage(feature.id);
+                db.collection("Feature").add(feature_object).then(function(feature)
+                {
+                    console.log("Document written with ID: ", feature.id);                
+                    uploadImage(feature.id);
 
-            }).catch(function(error) 
-            {
-                console.error("Error adding document: ", error);
-            });          
+                }).catch(function(error) 
+                {
+                    console.error("Error adding document: ", error);
+                });          
+            }
         }
-    }    
+    });
 }
 
 //uploads images and stores them under sea lions unique id
@@ -110,6 +112,13 @@ function getClipped(elementName)
     return clipped;
 }
 
+function strToBoolOrEmpty(val) {
+    converted = '';
+    if (val === 'true') {converted = true}
+    else if (val === 'false') {converted = false}
+    return converted;
+}
+
 function addSeaLion()
 {	
 	left = getClipped("left[]");
@@ -125,8 +134,8 @@ function addSeaLion()
         transponder: checkIfEmpty(document.getElementById("transponder").value),   
         living_status: checkIfEmpty(document.getElementById("living_status").value),   
 		tag_date_in: checkIfEmpty(document.getElementById("tagdatein").value),
-        left_tag_date_out: checkIfEmpty(document.getElementById("lefttagdateout").value),
-        right_tag_date_out: checkIfEmpty(document.getElementById("righttagdateout").value),
+        left_tag_out: strToBoolOrEmpty(checkIfEmpty(document.getElementById("lefttagout").value)),
+        right_tag_out: strToBoolOrEmpty(checkIfEmpty(document.getElementById("righttagout").value)),
 		type: checkIfEmpty(document.getElementById("tagtype").value),
         colour: checkIfEmpty(document.getElementById("tagcolour").value),		
 		tag_number: checkIfEmpty(document.getElementById("tagnumber").value),
@@ -147,7 +156,7 @@ function addSeaLion()
     db.collection("Sea Lions").add(sealion).then(function(sealion)
     {
         console.log("Document written with ID: ", sealion.id);
-        addFeatures(sealion.id);        
+        addFeatures(sealion.id).then(alert("Sealion added successfully"));        
 
     }).catch(function(error) 
     {
@@ -157,10 +166,10 @@ function addSeaLion()
 
 function checkIfEmpty(formdata)
 {
-    data = "-";
-    if (formdata != "")
-    {
-        data = formdata;
-    }
-    return data;
+    // data = "-";
+    // if (formdata != "")
+    // {
+    //     data = formdata;
+    // }
+    return formdata;
 }
