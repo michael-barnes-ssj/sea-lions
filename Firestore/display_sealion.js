@@ -166,19 +166,44 @@ function createCard(key)
     clipped_title.innerHTML = "Clipped toes:";
     col3cell.appendChild(clipped_title);
 
+    var leftkeys = ["left1", "left2", "left3", "left4", "left5"];
+    var rightkeys = ["right1", "right2", "right3", "right4", "right5"];
 
-    for (let key in sealion) 
-    {
-        if(sealion[key] == true)
-        {
-            var fieldElement = document.createElement("p");
-            //Fill with field data 
-            fieldElement.innerHTML = cap(key) + ": Clipped";       
-            //Append to appropriate column div
-            //Column 3
-            col3cell.appendChild(fieldElement);
+    var leftTitle = document.createElement("p");
+    leftTitle.innerHTML = "Left Clipped:";
+    col3cell.appendChild(leftTitle);
+
+    for (var i = 0; i < leftkeys.length; i++)
+    {        
+        if(sealion[leftkeys[i]] == true)
+        {            
+            appendLabel = createLabel(i+1, true);
         }
-    }  
+        else if (sealion[leftkeys[i]] == false)
+        {
+            appendLabel = createLabel(i+1, false);
+        }
+        col3cell.appendChild(appendLabel);
+    }
+
+    var rightTitle = document.createElement("p");
+    rightTitle.innerHTML = "Right Clipped:";
+    col3cell.appendChild(rightTitle);
+
+    for (var i = 0; i < rightkeys.length; i++)
+    {
+        
+        if(sealion[rightkeys[i]] == true)
+        {
+            
+            appendLabel = createLabel(i+1, true);
+        }
+        else if (sealion[rightkeys[i]] == false)
+        {
+            appendLabel = createLabel(i+1, false);
+        }
+        col3cell.appendChild(appendLabel);
+    }
     	
     var button_div = document.createElement("div");
     button_div.className = "button_div";
@@ -208,6 +233,22 @@ function createCard(key)
     col4cell.appendChild(button);  
 }
 
+function createLabel(num, clipped)
+{   
+    let label = document.createElement('label');
+    if(clipped == true)
+    {
+        label.className = "update-clipped toe";
+    }
+    else
+    {
+        label.className = "toe-label toe";
+    }
+    label.innerHTML = num;
+    
+    return label;
+}
+
 function deleteSealion(key)
 {
     db.collection("Sea Lions").doc(key).delete().then(function() {
@@ -227,7 +268,10 @@ function getFeatures(id, div)
         
         var title = document.createElement("p");
         title.innerHTML = "Features:";
-        div.appendChild(title);    
+        div.appendChild(title);
+
+        var scrollDiv = document.createElement("div");
+        scrollDiv.className = "scroll-div";
 
         // Go through each feature and create desciption element
         querySnapshot.forEach(function(doc) 
@@ -235,7 +279,7 @@ function getFeatures(id, div)
             console.log(doc.data());
             var featureElement = document.createElement("p");
             featureElement.innerHTML = doc.data().description;
-            div.appendChild(featureElement);
+            scrollDiv.appendChild(featureElement);
 
             // For each image the feature has, create element and fill it with image
             for (var i = 0; i < doc.data().images; i++)
@@ -243,9 +287,11 @@ function getFeatures(id, div)
                 var img = document.createElement("img");
                 img.className = "smallImage";
                 getImage(doc.id, i, img);
-                div.appendChild(img);                
+                scrollDiv.appendChild(img);                
             } 
         }); 
+
+        div.appendChild(scrollDiv);
     })
     .catch(function(error) 
     {
