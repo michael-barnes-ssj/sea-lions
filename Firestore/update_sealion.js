@@ -60,10 +60,11 @@ function createUpdateCard(key)
     var col2cell = document.createElement("div");
     var col3cell = document.createElement("div");
     var col4cell = document.createElement("div");
+    col4cell.id = "col4";
     col1cell.className = "large-3 medium-3 cell";
     col2cell.className = "large-3 medium-3 cell";
     col3cell.className = "large-3 medium-3 cell"; 
-    col4cell.className = "large-3 medium-3 cell";   
+    col4cell.className = "large-3 medium-3 cell four-update";   
 
     grid.appendChild(col1cell);
     grid.appendChild(col2cell);
@@ -264,29 +265,30 @@ function createUpdateCard(key)
         {
             createCheckbox(i+1, rightkeys[i], "right", 1, false, col3cell );
         }
-    }
+    }    
 
      //Create features title  
     var title = document.createElement("p");
     title.innerHTML = "Features:";
     col4cell.appendChild(title);
-    
-    //Gets all the features associated with sea lion. Updates inner html of element
-    getFeaturesForEdit(key, col4cell);    
 
-    // Add feature button
+        // Add feature button
     let addFeature = document.createElement("button");
     addFeature.className = "button feature";
+    addFeature.id = "add-feature-btn";
     addFeature.innerHTML = 'Add Feature';
     addFeature.onclick = createFeaturesForEdit;    
     col4cell.appendChild(addFeature);
+    
+    //Gets all the features associated with sea lion. Updates inner html of element
+    getFeaturesForEdit(key, col4cell);
     
     //create button
     let button = document.createElement('button');
     button.className = "button update";
     button.innerHTML = 'Submit';
     button.onclick = update;
-    col2cell.appendChild(button); 
+    col1cell.appendChild(button); 
 
     //create button
     
@@ -297,10 +299,10 @@ function createUpdateCard(key)
     col4cell.appendChild(featureDiv);   
 
     let deleteFeaturesButton = document.createElement('button');
-    deleteFeaturesButton.className = "button";
+    deleteFeaturesButton.className = "button delete";
     deleteFeaturesButton.innerHTML = 'Delete Features';
     deleteFeaturesButton.onclick = deleteFeatures;
-    featureDiv.appendChild(deleteFeaturesButton); 
+    col4cell.appendChild(deleteFeaturesButton); 
 }
 
 
@@ -318,6 +320,7 @@ function createCheckbox(num, id, name, value, checked, cell)
     let label = document.createElement('label');
     label.className = "toe-label update";
     label.setAttribute("for", id);
+    label.innerHTML = num
     
     cell.appendChild(checkbox);
     cell.appendChild(label);
@@ -334,6 +337,8 @@ function createFeaturesForEdit()
     var textarea = document.createElement('textarea');          
     var input=document.createElement('input');
     var div = document.getElementById("features");
+    var mainDiv = document.getElementById("col4");
+    var btn = document.getElementById("add-feature-btn");
 
     label.htmlFor = "featuredescription"+featureCount;
     label.innerHTML = "Description: ";
@@ -346,33 +351,36 @@ function createFeaturesForEdit()
     form.appendChild(field);
     field.appendChild(label);
     field.appendChild(textarea);
-    field.appendChild(input);    
-    div.appendChild(form); 
+    field.appendChild(input); 
+    mainDiv.insertBefore(form, btn);
     
     featureCount++;
 }
 
 // Takes in sea lion id, searches features with that id. Fills passed in element with features string
 function getFeaturesForEdit(id, div)
-{     
+{    
+    var scrollDiv = document.createElement("div");
+    scrollDiv.className = "scroll-div update"; 
     db.collection("Feature").where("id", "==", id).get().then(function(querySnapshot) 
     {           
         // Go through each feature and create desciption element
         querySnapshot.forEach(function(doc) 
         {  
             featureIds.push(doc.id);
-            var featureElement = document.createElement("input");
-            featureElement.setAttribute("type", "text");
+            var featureElement = document.createElement("textarea");
             featureElement.id = doc.id;
             featureElement.value = doc.data().description;
+            featureElement.className = "feature_element";
 
             var deletecheckbox = document.createElement("INPUT");
             deletecheckbox.setAttribute("type", "checkbox");
             deletecheckbox.name = "delete_checkbox";
-            deletecheckbox.id = "delete"+doc.id;            
+            deletecheckbox.id = "delete"+doc.id;  
+            deletecheckbox.className = "delete_checkbox";
 
-            div.appendChild(featureElement);
-            div.appendChild(deletecheckbox);
+            scrollDiv.appendChild(featureElement);
+            scrollDiv.appendChild(deletecheckbox);
 
             // For each image the feature has, create element and fill it with image
             for (var i = 0; i < doc.data().images; i++)
@@ -381,7 +389,7 @@ function getFeaturesForEdit(id, div)
                 img.className = "smallImage";
                 img.id = "image"+doc.id;
                 getImage(doc.id, i, img);
-                div.appendChild(img);                
+                scrollDiv.appendChild(img);                
             } 
         }); 
     })
@@ -389,6 +397,8 @@ function getFeaturesForEdit(id, div)
     {
         console.log("Error getting documents: ", error);
     });
+
+    div.appendChild(scrollDiv);
 }
 
 function isChecked(name, index)
