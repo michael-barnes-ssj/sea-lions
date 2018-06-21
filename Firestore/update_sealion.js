@@ -524,14 +524,11 @@ function addNewFeatures()
         let ref = db.collection("Feature")
         
         promises.push(ref.add(feature_object).then(function(feature)
-        {                       
-            promises = promises.concat(uploadNewImages(feature.id));                      
-
-        }).catch(function(error) 
-        {
-            console.error("Error adding document: ", error);                
+        {                                  
+            return uploadNewImages(feature.id);  
         }));          
     }
+    return Promise.all(promises);
 }
 
 //uploads images and stores them under sea lions unique id
