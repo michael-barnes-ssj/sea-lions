@@ -1,4 +1,4 @@
-Go to sea-lions-otago.firebaseapp.com to see adding and displaying sea lions.
+Go to https://sea-lion-trust-database.firebaseapp.com 
 
 Username: admin@slt.com
 Password: Sealionsproject1
